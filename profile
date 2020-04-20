@@ -1,13 +1,6 @@
-#
+# Initial environment
 # ~/.profile
 #
-#
-
-[[ "$XDG_CURRENT_DESKTOP" == "KDE" ]] || [[ "$XDG_CURRENT_DESKTOP" == "GNOME" ]] || export QT_QPA_PLATFORMTHEME="qt5ct"
-
-[[ -f ~/.extend.profile ]] && . ~/.extend.profile
-
-source /home/qusai/.nix-profile/etc/profile.d/nix.sh # added by Nix installer
 
 #env
 export PATH=/home/qusai/bin:$PATH
@@ -19,6 +12,7 @@ export EDITOR=nvim
 export SHELL=/bin/fish
 export SUDO_ASKPASS=/usr/bin/qt4-ssh-askpass
 export TMPDIR=/tmp
+export QT_QPA_PLATFORMTHEME="qt5ct"
 
 # Change where configuration files go
 # xdg
@@ -39,5 +33,6 @@ export SHIV_ROOT=$XDG_CONFIG_HOME/shiv
 export AUDACITY_PATH=$XDG_DATA_HOME/audacity
 xrdb -I$XDG_CONFIG_HOME/X11 $XDG_CONFIG_HOME/X11/Xresources
 
-#run everytime
-# remap-caps-esc
+# If nix exists
+export MY_NIX_PROFILE=$HOME/.nix-profile/etc/profile.d/nix.sh
+[[ -f MY_NIX_PROFILE ]] && . MY_NIX_PROFILE
