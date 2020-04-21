@@ -2,8 +2,12 @@
 # ~/.profile
 #
 
+# PATH
+export MY_NIX_PROFILE=$HOME/.nix-profile/etc/profile.d/nix.sh
+[[ -f $MY_NIX_PROFILE ]] && . $MY_NIX_PROFILE
+export PATH=$HOME/bin:$HOME/.local/bin:$PATH
+
 #env
-export PATH=/home/qusai/bin:$PATH
 export STEAM_RUNTIME=1
 export OMP_NUM_THREADS=8
 export OPENBLAS_NUM_THREADS=8
@@ -34,7 +38,3 @@ export SPACEPY=$XDG_CONFIG_HOME/spacepy
 export SHIV_ROOT=$XDG_CONFIG_HOME/shiv
 export AUDACITY_PATH=$XDG_DATA_HOME/audacity
 xrdb -I$XDG_CONFIG_HOME/X11 $XDG_CONFIG_HOME/X11/Xresources
-
-# If nix exists
-export MY_NIX_PROFILE=$HOME/.nix-profile/etc/profile.d/nix.sh
-[[ -f MY_NIX_PROFILE ]] && . MY_NIX_PROFILE
