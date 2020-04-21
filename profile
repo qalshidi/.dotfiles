@@ -20,6 +20,7 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 # progs
+export GNUPGHOME=$XDG_DATA_HOME/gnupg
 export WINEPREFIX=$XDG_CONFIG_HOME/wine
 export LESSHISTFILE=$XDG_CACHE_HOME/less/lesshst
 export PYLINTHOME=$XDG_CONFIG_HOME/pylint.d
@@ -33,9 +34,6 @@ export SPACEPY=$XDG_CONFIG_HOME/spacepy
 export SHIV_ROOT=$XDG_CONFIG_HOME/shiv
 export AUDACITY_PATH=$XDG_DATA_HOME/audacity
 xrdb -I$XDG_CONFIG_HOME/X11 $XDG_CONFIG_HOME/X11/Xresources
-# hacks
-export STEAM_HOME=$XDG_DATA_HOME
-export AUDACITY_HOME=$XDG_DATA_HOME
 
 # If nix exists
 export MY_NIX_PROFILE=$HOME/.nix-profile/etc/profile.d/nix.sh
