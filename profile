@@ -3,7 +3,7 @@
 #
 
 #env
-export PATH=/home/qusai/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 export STEAM_RUNTIME=1
 export OMP_NUM_THREADS=8
 export OPENBLAS_NUM_THREADS=8
