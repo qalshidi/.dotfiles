@@ -39,4 +39,4 @@ export AUDACITY_HOME=$XDG_DATA_HOME
 
 # If nix exists
 export MY_NIX_PROFILE=$HOME/.nix-profile/etc/profile.d/nix.sh
-[[ -f MY_NIX_PROFILE ]] && . MY_NIX_PROFILE
+[[ -f $MY_NIX_PROFILE ]] && . $MY_NIX_PROFILE
