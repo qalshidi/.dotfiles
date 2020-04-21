@@ -2,6 +2,10 @@
 # ~/.profile
 #
 
+# If nix exists
+export MY_NIX_PROFILE=$HOME/.nix-profile/etc/profile.d/nix.sh
+[[ -f $MY_NIX_PROFILE ]] && . $MY_NIX_PROFILE
+
 #env
 export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 export STEAM_RUNTIME=1
@@ -36,7 +40,3 @@ xrdb -I$XDG_CONFIG_HOME/X11 $XDG_CONFIG_HOME/X11/Xresources
 # hacks
 export STEAM_HOME=$XDG_DATA_HOME
 export AUDACITY_HOME=$XDG_DATA_HOME
-
-# If nix exists
-export MY_NIX_PROFILE=$HOME/.nix-profile/etc/profile.d/nix.sh
-[[ -f $MY_NIX_PROFILE ]] && . $MY_NIX_PROFILE
