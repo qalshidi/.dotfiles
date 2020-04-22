@@ -13,8 +13,8 @@ export OMP_NUM_THREADS=8
 export OPENBLAS_NUM_THREADS=8
 export VISUAL=nvim
 export EDITOR=nvim
-export SHELL=fish
-export SUDO_ASKPASS=/usr/bin/qt4-ssh-askpass
+export SHELL=$(whereis fish | awk '{print $2}')
+export SUDO_ASKPASS=/usr/bin/lxqt-openssh-askpass
 export TMPDIR=/tmp
 export QT_QPA_PLATFORMTHEME="qt5ct"
 
