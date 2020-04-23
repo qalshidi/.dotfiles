@@ -24,6 +24,7 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 # progs
+export TMUX_TMPDIR=$XDG_CACHE_HOME
 export GNUPGHOME=$XDG_DATA_HOME/gnupg
 export WINEPREFIX=$XDG_CONFIG_HOME/wine
 export LESSHISTFILE=$XDG_CACHE_HOME/less/lesshst
