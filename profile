@@ -8,6 +8,8 @@ export MY_NIX_PROFILE=$HOME/.nix-profile/etc/profile.d/nix.sh
 export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 
 #env
+export TERMINAL="st -t Terminal -f 'Fira Code Medium-14'"
+export PACMAN=powerpill
 export STEAM_RUNTIME=1
 export OMP_NUM_THREADS=8
 export OPENBLAS_NUM_THREADS=8
@@ -24,6 +26,7 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 # progs
+export TMUX_TMPDIR=$XDG_CACHE_HOME
 export GNUPGHOME=$XDG_DATA_HOME/gnupg
 export WINEPREFIX=$XDG_CONFIG_HOME/wine
 export LESSHISTFILE=$XDG_CACHE_HOME/less/lesshst
@@ -37,4 +40,6 @@ export SPACEPY=$XDG_CONFIG_HOME/spacepy
 export SHIV_ROOT=$XDG_DATA_HOME/shiv
 export AUDACITY_PATH=$XDG_DATA_HOME/audacity
 xrdb -I$XDG_CONFIG_HOME/X11 $XDG_CONFIG_HOME/X11/Xresources
-if [ -e /home/qusai/.nix-profile/etc/profile.d/nix.sh ]; then . /home/qusai/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+# Remap caps lock to escape
+xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
