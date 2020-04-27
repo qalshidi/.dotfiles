@@ -13,7 +13,7 @@ export OMP_NUM_THREADS=8
 export OPENBLAS_NUM_THREADS=8
 export VISUAL=nvim
 export EDITOR=nvim
-export SHELL=$(whereis fish | awk '{print $2}')
+export SHELL=$(whereis fish | awk '{ match($0, "\\S+bin\\S+", bin) } END{ print bin[0] }')
 export SUDO_ASKPASS=/usr/bin/lxqt-openssh-askpass
 export TMPDIR=/tmp
 export QT_QPA_PLATFORMTHEME="qt5ct"
@@ -37,3 +37,4 @@ export SPACEPY=$XDG_CONFIG_HOME/spacepy
 export SHIV_ROOT=$XDG_DATA_HOME/shiv
 export AUDACITY_PATH=$XDG_DATA_HOME/audacity
 xrdb -I$XDG_CONFIG_HOME/X11 $XDG_CONFIG_HOME/X11/Xresources
+if [ -e /home/qusai/.nix-profile/etc/profile.d/nix.sh ]; then . /home/qusai/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
