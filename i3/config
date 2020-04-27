@@ -120,9 +120,9 @@ bindsym $mod+minus scratchpad show
 bindsym $mod+Return exec --no-startup-id $terminal -e ranger
 bindsym $mod+Shift+Return exec --no-startup-id $terminal
 # Launcher
-set $launcher rofi -show-icons -terminal $terminal -theme solarized_alternate -font 'Roboto Medium 14'
-bindsym $mod+d exec "$launcher -modi combi -show combi -combi-modi drun,run"
-bindsym $mod+Shift+d exec $launcher -show ssh
+set $launcher rofi -show-icons -theme solarized_alternate -font 'Roboto Medium 14'
+bindsym $mod+d exec "$launcher -modi combi -show combi -combi-modi drun,run -terminal $terminal"
+bindsym $mod+Shift+d exec $launcher -show ssh -terminal "$terminal"
 # Volume
 bindsym $mod+Shift+v exec pavucontrol
 # Screenshot
