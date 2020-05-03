@@ -43,7 +43,7 @@ font pango:Roboto Bold 16
 # Border
 set $border border pixel 3
 for_window [class=".*"] $border 
-set $border_focus border pixel 4
+set $border_focus border pixel 8
 
 # Auto start necessities allow $XDG_CONFIG_HOME/autostart/*.desktop
 # files to dictate autostart
@@ -145,7 +145,7 @@ bindsym $mod+F6 exec $terminal -e nvim ~/Documents/Todo.markdown
 set $ws7 "7"
 
 set $ws8 "8: music"
-assign [class="(?i)Spotify"] $ws8
+assign [class="(?i)spotify"] $ws8
 bindsym $mod+F8 exec "env HOME=$XDG_DATA_HOME spotify"
 
 set $ws9 "9: steam"

@@ -19,6 +19,7 @@ export SHELL=$(whereis fish | awk '{ match($0, "\\S+bin\\S+", bin) } END{ print 
 export SUDO_ASKPASS=/usr/bin/lxqt-openssh-askpass
 export TMPDIR=/tmp
 export QT_QPA_PLATFORMTHEME="qt5ct"
+export MAKEFLAGS=$(($(nproc)+1))
 
 # Change where configuration files go
 # xdg
