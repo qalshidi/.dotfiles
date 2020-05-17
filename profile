@@ -40,6 +40,8 @@ export HISTFILE=$XDG_CACHE_HOME/bash/bash_history
 export SPACEPY=$XDG_CONFIG_HOME/spacepy
 export SHIV_ROOT=$XDG_DATA_HOME/shiv
 export AUDACITY_PATH=$XDG_DATA_HOME/audacity
+export IDL_PATH=+$XDG_DATA_HOME/idl:'<IDL_DEFAULT>'
+export IDL_DLM_PATH=+$XDG_DATA_HOME/idl:'<IDL_DEFAULT>'
 xrdb -I$XDG_CONFIG_HOME/X11 $XDG_CONFIG_HOME/X11/Xresources
 
 # Remap caps lock to escape
