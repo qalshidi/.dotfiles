@@ -19,7 +19,7 @@ export SHELL=$(which fish)
 export SUDO_ASKPASS=/usr/bin/lxqt-openssh-askpass
 export TMPDIR=/tmp
 export QT_QPA_PLATFORMTHEME="qt5ct"
-export MAKEFLAGS=$(($(nproc)+1))
+export MAKEFLAGS=-j$(($(nproc)+1))
 
 # Change where configuration files go
 # xdg
