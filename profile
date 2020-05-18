@@ -42,7 +42,10 @@ export SHIV_ROOT=$XDG_DATA_HOME/shiv
 export AUDACITY_PATH=$XDG_DATA_HOME/audacity
 export IDL_PATH=+$XDG_DATA_HOME/idl:'<IDL_DEFAULT>'
 export IDL_DLM_PATH=+$XDG_DATA_HOME/idl:'<IDL_DEFAULT>'
-xrdb -I$XDG_CONFIG_HOME/X11 $XDG_CONFIG_HOME/X11/Xresources
 
-# Remap caps lock to control
-xmodmap -e 'remove Lock = Caps_Lock' -e 'keycode 0x42 = Control_L' -e 'add Control = Control_L'
+if [ $(uname) = 'Linux' ]
+then
+    xrdb -I$XDG_CONFIG_HOME/X11 $XDG_CONFIG_HOME/X11/Xresources
+    # Remap caps lock to control
+    xmodmap -e 'remove Lock = Caps_Lock' -e 'keycode 0x42 = Control_L' -e 'add Control = Control_L'
+fi
