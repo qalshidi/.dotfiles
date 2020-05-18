@@ -45,7 +45,13 @@ export IDL_DLM_PATH=+$XDG_DATA_HOME/idl:'<IDL_DEFAULT>'
 
 if [ $(uname) = 'Linux' ]
 then
-    xrdb -I$XDG_CONFIG_HOME/X11 $XDG_CONFIG_HOME/X11/Xresources
-    # Remap caps lock to control
-    xmodmap -e 'remove Lock = Caps_Lock' -e 'keycode 0x42 = Control_L' -e 'add Control = Control_L'
+
+    # X11 specific
+    if [ $DISPLAY ]
+    then
+        xrdb -I$XDG_CONFIG_HOME/X11 $XDG_CONFIG_HOME/X11/Xresources
+        # Remap caps lock to control
+        xmodmap -e 'remove Lock = Caps_Lock' -e 'keycode 0x42 = Control_L' -e 'add Control = Control_L'
+    fi
+
 fi
