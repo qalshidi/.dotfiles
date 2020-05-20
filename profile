@@ -56,3 +56,6 @@ then
     fi
 
 fi
+
+# Run fish
+[ $(echo $- | grep i) ] && [ -z "$FISH_VERSION" ] && $SHELL
