@@ -15,17 +15,17 @@ export OMP_NUM_THREADS=8
 export OPENBLAS_NUM_THREADS=8
 export VISUAL=nvim
 export EDITOR=nvim
-export SHELL=$(which fish)
-export SUDO_ASKPASS=/usr/bin/lxqt-openssh-askpass
+[ $(which fish) ] && export SHELL=$(which fish)
+[ $(which lxqt-openssh-askpass) ] && export SUDO_ASKPASS=$(which lxqt-openssh-askpass)
 export TMPDIR=/tmp
 export QT_QPA_PLATFORMTHEME="qt5ct"
 export MAKEFLAGS=-j$(($(nproc)+1))
 
 # Change where configuration files go
 # xdg
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_CACHE_HOME=$HOME/.cache
-export XDG_DATA_HOME=$HOME/.local/share
+[ -z $XDG_CONFIG_HOME ] && export XDG_CONFIG_HOME=$HOME/.config
+[ -z $XDG_CACHE_HOME ] && export XDG_CACHE_HOME=$HOME/.cache
+[ -z $XDG_DATA_HOME ] && export XDG_DATA_HOME=$HOME/.local/share
 # progs
 export TMUX_TMPDIR=$XDG_CACHE_HOME
 export GNUPGHOME=$XDG_DATA_HOME/gnupg
@@ -44,12 +44,10 @@ export AUDACITY_PATH=$XDG_DATA_HOME/audacity
 export IDL_PATH=+$XDG_DATA_HOME/idl:'<IDL_DEFAULT>'
 export IDL_DLM_PATH=+$XDG_DATA_HOME/idl:'<IDL_DEFAULT>'
 
-if [ $(uname) = 'Linux' ]
-then
+if [ $(uname) = 'Linux' ]; then
 
     # X11 specific
-    if [ $DISPLAY ]
-    then
+    if [ $DISPLAY ]; then
         xrdb -I$XDG_CONFIG_HOME/X11 $XDG_CONFIG_HOME/X11/Xresources
         # Remap caps lock to control
         xmodmap -e 'remove Lock = Caps_Lock' -e 'keycode 0x42 = Control_L' -e 'add Control = Control_L'
