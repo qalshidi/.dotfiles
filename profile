@@ -56,4 +56,4 @@ if [ $(uname) = 'Linux' ]; then
 fi
 
 # Run fish
-[ $(echo $- | grep i) ] && [ -z "$FISH_VERSION" ] && exec $SHELL
+[ $(echo $- | grep i) ] && [ -z "$FISH_VERSION" ] && exec $SHELL -l
