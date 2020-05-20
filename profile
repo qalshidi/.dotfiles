@@ -58,4 +58,4 @@ then
 fi
 
 # Run fish
-[ $(echo $- | grep i) ] && [ -z "$FISH_VERSION" ] && $SHELL
+[ $(echo $- | grep i) ] && [ -z "$FISH_VERSION" ] && exec $SHELL
