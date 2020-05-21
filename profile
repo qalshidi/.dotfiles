@@ -56,5 +56,8 @@ if [ $(uname) = 'Linux' ]; then
 
 fi
 
+# welcome message
+[ $(which colorscript) ] && colorscript -e 29
+
 # Run custom shell
 [ $(echo $- | grep i) ] && [ -n $SHELL ] && exec $SHELL -l
