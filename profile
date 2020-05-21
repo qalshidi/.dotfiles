@@ -19,10 +19,10 @@ export MAKEFLAGS=-j$(($(nproc)+1))
 # default programs
 export VISUAL=vim
 export EDITOR=vim
-[ $(which nvim) ] && export EDITOR=$(which nvim) && export VISUAL=$(which nvim)
-[ $(which alacritty) ] && export TERMINAL=$(which alacritty)
-[ $(which fish) ] && export SHELL=$(which fish)
-[ $(which lxqt-openssh-askpass) ] && export SUDO_ASKPASS=$(which lxqt-openssh-askpass)
+[ -n "$(whereis nvim | grep bin)" ] && export EDITOR=$(which nvim) && export VISUAL=$(which nvim)
+[ -n "$(whereis alacritty | grep bin)" ] && export TERMINAL=$(which alacritty)
+[ -n "$(whereis fish | grep bin)" ] && export SHELL=$(which fish)
+[ -n "$(whereis lxqt-openssh-askpass | grep bin)" ] && export SUDO_ASKPASS=$(which lxqt-openssh-askpass)
 
 # Change where configuration files go
 # xdg
@@ -57,7 +57,7 @@ if [ $(uname) = 'Linux' ]; then
 fi
 
 # welcome message
-[ $(which colorscript) ] && colorscript -e 29
+[ -n "$(whereis colorscript | grep bin)" ] && colorscript -e 40
 
 # Run custom shell
 [ $(echo $- | grep i) ] && [ -n $SHELL ] && exec $SHELL -l
