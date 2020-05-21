@@ -49,9 +49,6 @@ set $border_focus border pixel 8
 # files to dictate autostart
 exec --no-startup-id lxsession
 
-# Default terminal
-set $terminal st -T Terminal -f 'Fira Code Medium-14'
-
 ## Bindings
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -116,13 +113,14 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
 ## Applications
+set $TERMINAL i3-sensible-terminal
 # Terminal and File Manager
-bindsym $mod+Return exec --no-startup-id $terminal -e ranger
-bindsym $mod+Shift+Return exec --no-startup-id $terminal
+bindsym $mod+Return exec --no-startup-id "$TERMINAL -e ranger"
+bindsym $mod+Shift+Return exec --no-startup-id "$TERMINAL"
 # Launcher
-set $launcher rofi -show-icons -theme solarized_alternate -font 'Roboto Medium 14'
-bindsym $mod+d exec "$launcher -modi combi -show combi -combi-modi drun,run -terminal $terminal"
-bindsym $mod+Shift+d exec $launcher -show ssh -terminal "$terminal"
+set $launcher rofi -show-icons -theme solarized_alternate -font 'sans-serif 16'
+bindsym $mod+d exec "$launcher -modi combi -show combi -combi-modi drun,run -terminal $TERMINAL"
+bindsym $mod+Shift+d exec $launcher -show ssh -terminal "$TERMINAL"
 # Volume
 bindsym $mod+Shift+v exec pavucontrol
 # Screenshot

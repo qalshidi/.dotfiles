@@ -4,22 +4,25 @@
 
 # PATH
 export MY_NIX_PROFILE=$HOME/.nix-profile/etc/profile.d/nix.sh
-[[ -f $MY_NIX_PROFILE ]] && . $MY_NIX_PROFILE
+[ -f $MY_NIX_PROFILE ] && . $MY_NIX_PROFILE
 export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 
 #env
-export TERMINAL="st -t Terminal -f 'Fira Code Medium-14'"
 export PACMAN=powerpill
 export STEAM_RUNTIME=1
 export OMP_NUM_THREADS=8
 export OPENBLAS_NUM_THREADS=8
-export VISUAL=nvim
-export EDITOR=nvim
-[ $(which fish) ] && export SHELL=$(which fish)
-[ $(which lxqt-openssh-askpass) ] && export SUDO_ASKPASS=$(which lxqt-openssh-askpass)
 export TMPDIR=/tmp
 export QT_QPA_PLATFORMTHEME="qt5ct"
 export MAKEFLAGS=-j$(($(nproc)+1))
+
+# default programs
+export VISUAL=vim
+export EDITOR=vim
+[ $(which nvim) ] && export EDITOR=$(which nvim) && export VISUAL=$(which nvim)
+[ $(which alacritty) ] && export TERMINAL=$(which alacritty)
+[ $(which fish) ] && export SHELL=$(which fish)
+[ $(which lxqt-openssh-askpass) ] && export SUDO_ASKPASS=$(which lxqt-openssh-askpass)
 
 # Change where configuration files go
 # xdg
@@ -49,11 +52,9 @@ if [ $(uname) = 'Linux' ]; then
     # X11 specific
     if [ $DISPLAY ]; then
         xrdb -I$XDG_CONFIG_HOME/X11 $XDG_CONFIG_HOME/X11/Xresources
-        # Remap caps lock to control
-        xmodmap -e 'remove Lock = Caps_Lock' -e 'keycode 0x42 = Control_L' -e 'add Control = Control_L'
     fi
 
 fi
 
-# Run fish
-[ $(echo $- | grep i) ] && [ -z "$FISH_VERSION" ] && exec $SHELL -l
+# Run custom shell
+[ $(echo $- | grep i) ] && [ -n $SHELL ] && exec $SHELL -l
