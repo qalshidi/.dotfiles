@@ -37,25 +37,25 @@ read_file weather {
 }
 
 cpu_temperature 0 {
-	format = "T: %degrees °C"
+	format = "temp %degrees °C"
 	# path = "/sys/devices/platform/coretemp.0/temp1_input"
 	path = "/sys/devices/platform/coretemp.0/hwmon/hwmon0/temp1_input"
 }
 
 
 cpu_usage {
-        format = " cpu  %usage "
+        format = " cpu %usage "
 }
 
 load {
-        format = " load %5min "
+    format = " load %5min "
 	format_above_threshold = "Warning: %1min"
 	max_threshold = "4"
 }
 
 disk "/" {
         # format = " hdd %avail "
-        format = " ⛁ %avail "
+        format = " ⛁  %avail "
 }
 
 ethernet _first_ {
