@@ -20,8 +20,7 @@ order += "read_file weather"
 order += "cpu_usage"
 order += "load"
 order += "cpu_temperature 0"
-order += "disk /"
-#order += "disk /home"
+order += "disk /home"
 # order += "wireless _first_"
 # order += "ethernet _first_"
 # order += "battery all"
@@ -53,7 +52,7 @@ load {
 	max_threshold = "4"
 }
 
-disk "/" {
+disk "/home" {
         # format = " hdd %avail "
         format = " ⛁  %avail "
 }
@@ -91,6 +90,6 @@ memory {
 
 tztime local {
         # format = "%Y-%m-%d %H:%M:%S"
-        format = "%Y-%m-%d %H:%M"
+        format = "%m-%d %H:%M"
         # format = " %d.%m. %H:%M "
 }
