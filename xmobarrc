@@ -1,0 +1,94 @@
+-- solBase03 = "#002b36"
+-- solBase02 = "#073642"
+-- solBase01 = "#586e75"
+-- solBase00 = "#657b83"
+-- solBase0 = "#839496"
+-- solBase1 = "#93a1a1"
+-- solBase2 = "#eee8d5"
+-- solBase3 = "#fdf6e3"
+-- solYellow = "#b58900"
+-- solOrange = "#cb4b16"
+-- solRed = "#dc322f"
+-- solMagenta = "#d33682"
+-- solViolet = "#6c71c4"
+-- solBlue = "#268bd2"
+-- solCyan = "#2aa198"
+-- solGreen = "#859900"
+
+Config { 
+
+   -- appearance
+     font =         "xft:Roboto Medium:size=16:bold:antialias=true"
+   , bgColor =       "#eee8d5"
+   , fgColor =       "#657b83"
+   , position =     TopW L 90
+   , border =       BottomB
+   , borderColor =   "#eee8d5"
+
+   -- layout
+   , sepChar =  "%"   -- delineator between plugin names and straight text
+   , alignSep = "}{"  -- separator between left-right alignment
+   , template = "%UnsafeStdinReader% / %schedule% }{ %multicpu% / %coretemp% / %memory% / %KARB% / %date% "
+
+   -- general behavior
+   , lowerOnStart =     True    -- send to bottom of window stack on start
+   , hideOnStart =      False   -- start with window unmapped (hidden)
+   , allDesktops =      True    -- show on all desktops
+   , overrideRedirect = True    -- set the Override Redirect flag (Xlib)
+   , pickBroadest =     False   -- choose widest display (multi-monitor)
+   , persistent =       True    -- enable/disable hiding (True = disabled)
+
+   -- plugins
+   --   Numbers can be automatically colored according to their value. xmobar
+   --   decides color based on a three-tier/two-cutoff system, controlled by
+   --   command options:
+   --     --Low sets the low cutoff
+   --     --High sets the high cutoff
+   --
+   --     --low sets the color below --Low cutoff
+   --     --normal sets the color between --Low and --High cutoffs
+   --     --High sets the color above --High cutoff
+   --
+   --   The --template option controls how the plugin is displayed. Text
+   --   color can be set by enclosing in <fc></fc> tags. For more details
+   --   see http://projects.haskell.org/xmobar/#system-monitor-plugins.
+   , commands = 
+
+        -- weather monitor
+        [ Run Weather "KARB" ["-t","<skyCondition> | <tempC>C | <windMph>mph"] 18000
+
+        -- StdinReader
+        , Run UnsafeStdinReader
+
+        -- schedule 
+        , Run Com "cat" ["/tmp/next_cal_event"] "schedule" 60
+
+        -- cpu activity monitor
+        , Run MultiCpu       [ "--template" , "cpu <total>%"
+                             , "--Low"      , "50"         -- units: %
+                             , "--High"     , "85"         -- units: %
+                             , "--low"      ,  "#93a1a1"
+                             , "--high"     , "#dc322f"
+                             ] 10
+
+        -- cpu core temperature monitor
+        , Run CoreTemp       [ "--template" , "temp <core0>°C"
+                             , "--Low"      , "70"        -- units: °C
+                             , "--High"     , "80"        -- units: °C
+                             , "--low"      ,  "#93a1a1"
+                             , "--high"     , "#dc322f"
+                             ] 50
+                          
+        -- memory usage monitor
+        , Run Memory         [ "--template" , "mem <usedratio>%"
+                             , "--Low"      , "20"        -- units: %
+                             , "--High"     , "90"        -- units: %
+                             , "--low"      , "#93a1a1"
+                             , "--high"     , "#dc322f"
+                             ] 10
+
+        -- time and date indicator 
+        --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
+        , Run Date           "%a, %_m/%_d,  %H:%M" "date" 10
+        ]
+   }
