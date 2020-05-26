@@ -77,16 +77,27 @@ myPP = defaultPP
     , ppUrgent  = xmobarColor solOrange solYellow
     }
 
+myLayout = tiled ||| Mirror tiled ||| noBorders Full
+  where
+    -- default tiling algorithm partitions the screen into two panes
+    tiled   = Tall nmaster delta ratio
+    -- The default number of windows in the master pane
+    nmaster = 1
+    -- Default proportion of screen occupied by master pane
+    ratio   = 1/2
+    -- Percent of screen to increment by when resizing panes
+    delta   = 3/100
+
+
 main = do
     h <- spawnPipe "xmobar"
     xmonad $ docks defaultConfig
         { manageHook = myManageHook <+> manageHook defaultConfig
-        , layoutHook = smartBorders
-            $ avoidStruts
+        , layoutHook = avoidStruts
             $ spacingRaw True
                          (Border outerGaps outerGaps outerGaps outerGaps) True
                          (Border innerGaps innerGaps innerGaps innerGaps) True
-            $ layoutHook defaultConfig
+            $ smartBorders myLayout
         , modMask = myModMask
         , startupHook = startup
         , terminal = myTerminal
