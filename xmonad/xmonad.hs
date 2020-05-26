@@ -1,17 +1,21 @@
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
-import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing
+import qualified XMonad.StackSet as W
+import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Util.Run(spawnPipe)
+import XMonad.Util.SpawnOnce
+
+import System.Exit
 import System.IO
 
 myTerminal = "$TERMINAL"
 myModMask = mod4Mask -- Win key or Super_L
-myLauncher = "rofi -show-icons -theme solarized_alternate -font 'sans-serif 16' "
-myProgramLauncher = myLauncher ++ "-modi combi -show combi -combi-modi drun,run -terminal $TERMINAL"
-mySSHLauncher = myLauncher ++ "-show ssh -terminal $TERMINAL"
+myLauncher = "rofi -show-icons -theme solarized_alternate -font 'sans-serif 16'"
+myProgramLauncher = unwords [myLauncher, "-modi combi -show combi -combi-modi drun,run -terminal $TERMINAL"]
+mySSHLauncher = unwords [myLauncher, "-show ssh -terminal $TERMINAL"]
 outerGaps = 30
 innerGaps = 10
 
@@ -35,14 +39,16 @@ solGreen = "#859900"
 
 startup :: X ()
 startup = do
-    spawn "dbus-launch --sh-syntax --exit-with-session &"
-    spawn "lxqt-session &"
-    spawn "lxqt-policykit-agent &"
-    spawn "lxqt-powermanagement &"
+    spawnOnce "dbus-launch --sh-syntax --exit-with-session &"
+    spawnOnce "lxqt-session &"
+    spawnOnce "lxqt-policykit-agent &"
+    spawnOnce "lxqt-powermanagement &"
 
 myManageHook = composeAll
     [ className =? "lxqt-openssh-askpass" --> doFloat
     , className =? "Xmessage" --> doFloat
+    , className =? "mpv" --> doFloat
+    , className =? "trayer" --> doFloat
     , className =? "firefox" --> doShift "5:browser"
     , className =? "spotify" --> doShift "8:music"
     , className =? "steam" --> doShift "9:steam"
@@ -62,9 +68,32 @@ myKeys =
     , ((myModMask, 0x1008FF11), spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
     , ((myModMask, 0x1008FF13), spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
     , ((myModMask, 0x1008FF12), spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
+    -- Quit xmonad
+    , ((myModMask .|. shiftMask, xK_Escape), io (exitWith ExitSuccess))
+    -- Restart xmonad
+    , ((myModMask .|. shiftMask, xK_r), spawn "xmonad --recompile; xmonad --restart")
     ]
 
-myWorkspaces = ["1","2","3","4","5:browser","6:work","7","8:music","9:steam","0","-","="]
+    -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
+    -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
+    --
+    ++
+    [((m .|. myModMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+        | (key, sc) <- zip [xK_q, xK_w, xK_e] [0..]
+        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+
+myWorkspaces =
+    [ "1"
+    , "2"
+    , "3"
+    , "4"
+    , "5:browser"
+    , "6:work"
+    , "7"
+    , "8:music"
+    , "9:steam"
+    , "0"
+    ]
 
 myPP :: PP
 myPP = defaultPP
@@ -77,7 +106,7 @@ myPP = defaultPP
     , ppUrgent  = xmobarColor solOrange solYellow
     }
 
-myLayout = tiled ||| Mirror tiled ||| noBorders Full
+myLayout = tiled ||| Mirror tiled ||| Full
   where
     -- default tiling algorithm partitions the screen into two panes
     tiled   = Tall nmaster delta ratio
@@ -88,23 +117,26 @@ myLayout = tiled ||| Mirror tiled ||| noBorders Full
     -- Percent of screen to increment by when resizing panes
     delta   = 3/100
 
+myLayoutHook
+    = avoidStruts
+    $ spacingRaw
+        True
+        (Border outerGaps outerGaps outerGaps outerGaps) True
+        (Border innerGaps innerGaps innerGaps innerGaps) True
+    $ smartBorders
+      myLayout
 
 main = do
     h <- spawnPipe "xmobar"
     xmonad $ docks defaultConfig
         { manageHook = myManageHook <+> manageHook defaultConfig
-        , layoutHook = avoidStruts
-            $ spacingRaw True
-                         (Border outerGaps outerGaps outerGaps outerGaps) True
-                         (Border innerGaps innerGaps innerGaps innerGaps) True
-            $ smartBorders myLayout
+        , layoutHook = myLayoutHook
         , modMask = myModMask
         , startupHook = startup
         , terminal = myTerminal
         , normalBorderColor = solCyan
         , focusedBorderColor = solBlue
         , logHook = dynamicLogWithPP $ myPP { ppOutput = hPutStrLn h }
-        -- , keys = myKeys
         , workspaces = myWorkspaces
         , borderWidth = 3
         } `additionalKeys` myKeys

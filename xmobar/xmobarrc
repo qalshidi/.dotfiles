@@ -21,7 +21,7 @@ Config {
      font =         "xft:Roboto Medium:size=16:bold:antialias=true"
    , bgColor =       "#eee8d5"
    , fgColor =       "#657b83"
-   , position =     TopW L 90
+   , position =     TopW L 80
    , border =       BottomB
    , borderColor =   "#eee8d5"
 

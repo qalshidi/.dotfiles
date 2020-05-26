@@ -13,7 +13,8 @@ export STEAM_RUNTIME=1
 export OMP_NUM_THREADS=8
 export OPENBLAS_NUM_THREADS=8
 export TMPDIR=/tmp
-export QT_QPA_PLATFORMTHEME="qt5ct"
+export QT_PLATFORM_PLUGIN=lxqt
+export QT_QPA_PLATFORMTHEME=lxqt
 export MAKEFLAGS=-j$(($(nproc)+1))
 
 # default programs
