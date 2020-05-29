@@ -8,6 +8,7 @@ import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.SpawnOnce
 
+import Data.String.Unicode
 import System.Exit
 import System.IO
 
@@ -62,8 +63,8 @@ myKeys =
     , ((myModMask, xK_F6), spawn "$TERMINAL -e nvim ~/Documents/Todo.markdown ")
     , ((myModMask, xK_F8), spawn "env HOME=$XDG_DATA_HOME spotify")
     , ((myModMask, xK_F9), spawn "env HOME=$XDG_DATA_HOME steam")
-    , ((myModMask, xK_Print), spawn "sleep 0.2; scrot -s")
-    , ((0, xK_Print), spawn "sleep 0.2; scrot")
+    , ((myModMask, xK_Print), spawn "sleep 0.2; scrot -s ~/Pictures/Screenshots/screenshot.png")
+    , ((0, xK_Print), spawn "sleep 0.2; scrot ~/Pictures/Screenshots/screenshot.png")
     , ((myModMask .|. shiftMask, xK_x), spawn "lxqt-leave")
     , ((myModMask, 0x1008FF11), spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
     , ((myModMask, 0x1008FF13), spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
@@ -97,16 +98,19 @@ myWorkspaces =
 
 myPP :: PP
 myPP = defaultPP
-    { ppCurrent = xmobarColor solViolet ""
+    { ppCurrent = xmobarColor solOrange solBase02 -- . leftwrap
     , ppVisible = wrap "" ""
     , ppVisibleNoWindows = Just (\wsId -> xmobarColor solBase1 "" wsId)
     , ppTitle   = xmobarColor solBase01  "" . shorten 40
     , ppWsSep = ", "
     , ppSep = " | "
-    , ppUrgent  = xmobarColor solOrange solYellow
+    , ppUrgent  = xmobarColor solRed solOrange
     }
+    -- where
+      -- leftwrap = wrap " " " "
+      -- rightwrap = wrap " " " "
 
-myLayout = tiled ||| Mirror tiled ||| Full
+myLayout = smartBorders tiled ||| smartBorders (Mirror tiled) ||| noBorders Full
   where
     -- default tiling algorithm partitions the screen into two panes
     tiled   = Tall nmaster delta ratio
@@ -123,11 +127,10 @@ myLayoutHook
         True
         (Border outerGaps outerGaps outerGaps outerGaps) True
         (Border innerGaps innerGaps innerGaps innerGaps) True
-    $ smartBorders
-      myLayout
+    $ myLayout
 
 main = do
-    h <- spawnPipe "xmobar"
+    xmproc <- spawnPipe "xmobar"
     xmonad $ docks defaultConfig
         { manageHook = myManageHook <+> manageHook defaultConfig
         , layoutHook = myLayoutHook
@@ -136,7 +139,7 @@ main = do
         , terminal = myTerminal
         , normalBorderColor = solCyan
         , focusedBorderColor = solBlue
-        , logHook = dynamicLogWithPP $ myPP { ppOutput = hPutStrLn h }
+        , logHook = dynamicLogWithPP $ myPP { ppOutput = hPutStrLn xmproc }
         , workspaces = myWorkspaces
         , borderWidth = 3
         } `additionalKeys` myKeys
