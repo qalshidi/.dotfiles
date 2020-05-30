@@ -1,5 +1,6 @@
 import XMonad
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing
@@ -58,6 +59,7 @@ myManageHook = composeAll
 
 myKeys = 
     [ ((myModMask, xK_p), spawn myProgramLauncher)
+    , ((myModMask, xK_backslash), spawn $ myTerminal ++ " -e ranger")
     , ((myModMask, xK_v), spawn "pavucontrol")
     , ((myModMask, xK_F5), spawn "env HOME=$XDG_DATA_HOME firefox")
     , ((myModMask, xK_F6), spawn "$TERMINAL -e nvim ~/Documents/Todo.markdown ")
@@ -96,20 +98,27 @@ myWorkspaces =
     , "0"
     ]
 
+rightwrap = wrap " \57534" "\57528 "
 myPP :: PP
 myPP = defaultPP
-    { ppCurrent = xmobarColor solOrange solBase02 -- . leftwrap
-    , ppVisible = wrap "" ""
+    { ppCurrent = xmobarColor solBase03 solOrange . currentLeftWrap
+    , ppVisible = xmobarColor solBase02 solYellow . visibleLeftWrap
     , ppVisibleNoWindows = Just (\wsId -> xmobarColor solBase1 "" wsId)
     , ppTitle   = xmobarColor solBase01  "" . shorten 40
     , ppWsSep = ", "
     , ppSep = " | "
     , ppUrgent  = xmobarColor solRed solOrange
     }
-    -- where
-      -- leftwrap = wrap " " " "
-      -- rightwrap = wrap " " " "
+    where
+      currentLeftWrap = wrap
+                          (xmobarColor solOrange "" "\57556")
+                          (xmobarColor solOrange "" "\57554")
+      visibleLeftWrap = wrap
+                          (xmobarColor solYellow "" "\57556")
+                          (xmobarColor solYellow "" "\57554")
 
+-- Layout
+-- ======
 myLayout = smartBorders tiled ||| smartBorders (Mirror tiled) ||| noBorders Full
   where
     -- default tiling algorithm partitions the screen into two panes
@@ -129,16 +138,19 @@ myLayoutHook
         (Border innerGaps innerGaps innerGaps innerGaps) True
     $ myLayout
 
+-- Main
+-- ====
+main :: IO()
 main = do
     xmproc <- spawnPipe "xmobar"
-    xmonad $ docks defaultConfig
+    xmonad $ docks $ ewmh defaultConfig
         { manageHook = myManageHook <+> manageHook defaultConfig
         , layoutHook = myLayoutHook
         , modMask = myModMask
         , startupHook = startup
         , terminal = myTerminal
         , normalBorderColor = solCyan
-        , focusedBorderColor = solBlue
+        , focusedBorderColor = solOrange
         , logHook = dynamicLogWithPP $ myPP { ppOutput = hPutStrLn xmproc }
         , workspaces = myWorkspaces
         , borderWidth = 3

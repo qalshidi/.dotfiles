@@ -18,7 +18,7 @@
 Config { 
 
    -- appearance
-     font =         "xft:Roboto Medium:size=16:bold:antialias=true"
+     font =         "xft:NotoSansDisplay Nerd Font:size=14:bold:antialias=true"
    , bgColor =       "#eee8d5"
    , fgColor =       "#657b83"
    , position =     TopW L 85
