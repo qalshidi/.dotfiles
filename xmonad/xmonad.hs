@@ -9,7 +9,6 @@ import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.SpawnOnce
 
-import Data.String.Unicode
 import System.Exit
 import System.IO
 
