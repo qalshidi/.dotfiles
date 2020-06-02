@@ -15,6 +15,7 @@ export OPENBLAS_NUM_THREADS=8
 export TMPDIR=/tmp
 export QT_PLATFORM_PLUGIN=lxqt
 export QT_QPA_PLATFORMTHEME=lxqt
+export XDG_CURRENT_DESKTOP="LXQt"
 export MAKEFLAGS=-j$(($(nproc)+1))
 
 # default programs

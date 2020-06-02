@@ -53,7 +53,7 @@ myManageHook = composeAll
     , className =? "trayer" --> doFloat
     , className =? "firefox" --> doShift "5:browser"
     , className =? "spotify" --> doShift "8:music"
-    , className =? "steam" --> doShift "9:steam"
+    , className =? "Steam" --> doShift "9:steam"
     , manageDocks
     ]
 
