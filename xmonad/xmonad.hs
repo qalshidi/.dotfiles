@@ -9,6 +9,8 @@ import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.SpawnOnce
 
+import Data.Monoid
+
 import System.Exit
 import System.IO
 
@@ -38,13 +40,14 @@ solBlue = "#268bd2"
 solCyan = "#2aa198"
 solGreen = "#859900"
 
-startup :: X ()
-startup = do
+myStartupHook :: X ()
+myStartupHook = do
     spawnOnce "dbus-launch --sh-syntax --exit-with-session &"
     spawnOnce "lxqt-session &"
     spawnOnce "lxqt-policykit-agent &"
     spawnOnce "lxqt-powermanagement &"
 
+myManageHook :: Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
     [ className =? "lxqt-openssh-askpass" --> doFloat
     , className =? "Xmessage" --> doFloat
@@ -97,11 +100,10 @@ myWorkspaces =
     , "0"
     ]
 
-rightwrap = wrap " \57534" "\57528 "
 myPP :: PP
-myPP = defaultPP
-    { ppCurrent = xmobarColor solBase03 solOrange . currentLeftWrap
-    , ppVisible = xmobarColor solBase02 solYellow . visibleLeftWrap
+myPP = def
+    { ppCurrent = currentLeftWrap . xmobarColor solBase03 solOrange . pad
+    , ppVisible = xmobarColor solBase02 solYellow . visibleLeftWrap . pad
     , ppVisibleNoWindows = Just (\wsId -> xmobarColor solBase1 "" wsId)
     , ppTitle   = xmobarColor solBase01  "" . shorten 40
     , ppWsSep = ", "
@@ -142,11 +144,11 @@ myLayoutHook
 main :: IO()
 main = do
     xmproc <- spawnPipe "xmobar"
-    xmonad $ docks $ ewmh defaultConfig
-        { manageHook = myManageHook <+> manageHook defaultConfig
+    xmonad $ docks $ ewmh def
+        { manageHook = myManageHook <+> manageHook def
         , layoutHook = myLayoutHook
         , modMask = myModMask
-        , startupHook = startup
+        , startupHook = myStartupHook
         , terminal = myTerminal
         , normalBorderColor = solCyan
         , focusedBorderColor = solOrange
