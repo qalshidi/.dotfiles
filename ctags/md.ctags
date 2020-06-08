@@ -1,5 +1,5 @@
 # Obsidian tags
---regex-markdown=/#(\w+)/\1/g,tag,tags/
---regex-markdown=/#(\w+)/\1/g,tag,tags/
---regex-markdown=/\[\[(\w+)\]\]/\1/g,tag,tags/
---regex-markdown=/\[(\w+)\]/\1/a,anchor,anchors/
+--regex-markdown=/#(\w+)/\1/g,tag,tags/i
+--regex-markdown=/#(\w+)/\1/g,tag,tags/i
+--regex-markdown=/\[\[([[:alnum:][:space:]]+)\]\]/\1/g,tag,tags/i
+--regex-markdown=/\[([[:alnum:][:space:]]+)\][^\]]/\1/a,anchor,anchors/i
