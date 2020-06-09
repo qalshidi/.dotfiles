@@ -70,9 +70,11 @@ myKeys =
     , ((myModMask, xK_Print), spawn "sleep 0.2; scrot -s ~/Pictures/Screenshots/screenshot.png")
     , ((0, xK_Print), spawn "sleep 0.2; scrot ~/Pictures/Screenshots/screenshot.png")
     , ((myModMask .|. shiftMask, xK_x), spawn "lxqt-leave")
-    , ((myModMask, 0x1008FF11), spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
-    , ((myModMask, 0x1008FF13), spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
-    , ((myModMask, 0x1008FF12), spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
+    , ((0, 0x1008FF11), spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
+    , ((0, 0x1008FF13), spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
+    , ((0, 0x1008FF12), spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
+    , ((0, 0x1008FF02), spawn "lxqt-backlight_backend --inc")
+    , ((0, 0x1008FF03), spawn "lxqt-backlight_backend --dec")
     -- Quit xmonad
     , ((myModMask .|. shiftMask, xK_Escape), io (exitWith ExitSuccess))
     -- Restart xmonad
