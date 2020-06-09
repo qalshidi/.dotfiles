@@ -45,7 +45,6 @@ myStartupHook = do
     spawnOnce "dbus-launch --sh-syntax --exit-with-session &"
     spawnOnce "lxqt-session &"
     spawnOnce "lxqt-policykit-agent &"
-    spawnOnce "lxqt-powermanagement &"
 
 myManageHook :: Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
