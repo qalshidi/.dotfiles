@@ -51,7 +51,7 @@ myManageHook = composeAll
     [ className =? "lxqt-openssh-askpass" --> doFloat
     , className =? "Xmessage" --> doFloat
     , className =? "mpv" --> doFloat
-    , className =? "trayer" --> doFloat
+    , className =? "KeePassXC" --> doFloat
     , className =? "firefox" --> doShift "5:browser"
     , className =? "spotify" --> doShift "8:music"
     , className =? "Steam" --> doShift "9:steam"
@@ -147,6 +147,7 @@ main = do
     xmproc <- spawnPipe "xmobar"
     xmonad $ docks $ ewmh def
         { manageHook = myManageHook <+> manageHook def
+        , handleEventHook = fullscreenEventHook <+> handleEventHook def
         , layoutHook = myLayoutHook
         , modMask = myModMask
         , startupHook = myStartupHook
