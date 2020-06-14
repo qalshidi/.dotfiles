@@ -63,7 +63,7 @@ fi
 
 # Per computer options
 extend=$HOME/.profile.extend.sh
-[ -f extend ] && . extend
+[ -f $extend ] && . $extend
 
 # Run custom shell
 [ $(echo $- | grep i) ] && [ -n $SHELL ] && exec $SHELL -l
