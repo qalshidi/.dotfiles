@@ -1,7 +1,9 @@
 import XMonad
+import XMonad.Config.Desktop
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing
 import qualified XMonad.StackSet as W
@@ -51,10 +53,11 @@ myManageHook = composeAll
     [ className =? "lxqt-openssh-askpass" --> doFloat
     , className =? "Xmessage" --> doFloat
     , className =? "mpv" --> doFloat
-    , className =? "KeePassXC" --> doFloat
+    , className =? "KeePassXC" --> doIgnore
     , className =? "firefox" --> doShift "5:browser"
     , className =? "spotify" --> doShift "8:music"
     , className =? "Steam" --> doShift "9:steam"
+    , isFullscreen --> doFullFloat
     , manageDocks
     ]
 
@@ -121,7 +124,7 @@ myPP = def
 
 -- Layout
 -- ======
-myLayout = smartBorders tiled ||| smartBorders (Mirror tiled) ||| noBorders Full
+myLayout = tiled ||| (Mirror tiled) ||| noBorders Full
   where
     -- default tiling algorithm partitions the screen into two panes
     tiled   = Tall nmaster delta ratio
@@ -133,24 +136,24 @@ myLayout = smartBorders tiled ||| smartBorders (Mirror tiled) ||| noBorders Full
     delta   = 3/100
 
 myLayoutHook
-    = avoidStruts
-    $ spacingRaw
+    = smartBorders
+    . spacingRaw
         True
         (Border outerGaps outerGaps outerGaps outerGaps) True
         (Border innerGaps innerGaps innerGaps innerGaps) True
-    $ myLayout
+    $   myLayout
 
 -- Main
 -- ====
 main :: IO()
 main = do
     xmproc <- spawnPipe "xmobar"
-    xmonad $ docks $ ewmh def
-        { manageHook = myManageHook <+> manageHook def
-        , handleEventHook = fullscreenEventHook <+> handleEventHook def
-        , layoutHook = myLayoutHook
+    xmonad $ desktopConfig
+        { manageHook = myManageHook <+> manageHook desktopConfig
+        , handleEventHook = fullscreenEventHook <+> handleEventHook desktopConfig
+        , layoutHook = desktopLayoutModifiers myLayoutHook
         , modMask = myModMask
-        , startupHook = myStartupHook
+        , startupHook = myStartupHook <+> startupHook desktopConfig
         , terminal = myTerminal
         , normalBorderColor = solCyan
         , focusedBorderColor = solOrange
