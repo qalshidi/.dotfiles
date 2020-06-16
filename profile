@@ -8,6 +8,7 @@ export MY_NIX_PROFILE=$HOME/.nix-profile/etc/profile.d/nix.sh
 export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 
 #env
+export GPG_TTY=$(tty)
 export PACMAN=powerpill
 export STEAM_RUNTIME=1
 export OMP_NUM_THREADS=8
