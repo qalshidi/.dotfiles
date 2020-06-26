@@ -56,16 +56,16 @@ if [ $(uname) = 'Linux' ]; then
     # X11 specific
     if [ $DISPLAY ]; then
         xrdb -I$XDG_CONFIG_HOME/X11 $XDG_CONFIG_HOME/X11/Xresources
-        setxkbmap -option ctrl:nocaps
         # space as hyper
-        if [ ! "$IS_HYPER_KEYS" ]; then
+        if [ ! "$IS_KEYS_MAPPED" ]; then
+            setxkbmap -option ctrl:nocaps
             xmodmap -e "keycode 23 = Hyper_L"
             xmodmap -e "keycode any = Tab"  
             xmodmap -e "keycode 51 = Hyper_R"
             xmodmap -e "keycode any = backslash"  
             xcape -e "Hyper_L=Tab;Hyper_R=backslash"
         fi
-        export IS_HYPER_KEYS="yes"
+        export IS_KEYS_MAPPED="yes"
     fi
 
 fi

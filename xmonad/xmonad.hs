@@ -63,7 +63,9 @@ myManageHook = composeAll
 
 myKeys = 
     [ ((myModMask, xK_p), spawn myProgramLauncher)
+    , ((myModMask, xK_space), spawn myTerminal)
     , ((myModMask, xK_backslash), spawn $ myTerminal ++ " -e ranger")
+    , ((myModMask, xK_BackSpace), kill)
     , ((myModMask, xK_v), spawn "pavucontrol")
     , ((myModMask, xK_F5), spawn "env HOME=$XDG_DATA_HOME firefox")
     , ((myModMask, xK_F6), spawn "$TERMINAL -e nvim ~/Documents/Todo.markdown ")
@@ -71,7 +73,7 @@ myKeys =
     , ((myModMask, xK_F9), spawn "env HOME=$XDG_DATA_HOME steam")
     , ((myModMask, xK_Print), spawn "sleep 0.2; scrot -s ~/Pictures/Screenshots/screenshot.png")
     , ((0, xK_Print), spawn "sleep 0.2; scrot ~/Pictures/Screenshots/screenshot.png")
-    , ((myModMask .|. shiftMask, xK_x), spawn "lxqt-leave")
+    , ((myModMask, xK_Escape), spawn "lxqt-leave")
     , ((0, 0x1008FF11), spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
     , ((0, 0x1008FF13), spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
     , ((0, 0x1008FF12), spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
@@ -80,7 +82,7 @@ myKeys =
     -- Quit xmonad
     , ((myModMask .|. shiftMask, xK_Escape), io (exitWith ExitSuccess))
     -- Restart xmonad
-    , ((myModMask .|. shiftMask, xK_r), spawn "xmonad --recompile; xmonad --restart")
+    , ((myModMask, xK_r), spawn "xmonad --recompile; xmonad --restart")
     ]
 
     -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
