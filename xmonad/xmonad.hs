@@ -106,7 +106,7 @@ myWorkspaces =
 
 myPP :: PP
 myPP = def
-    { ppCurrent = currentLeftWrap . xmobarColor solBase03 solOrange . pad
+    { ppCurrent = currentLeftWrap . xmobarColor solOrange solBase03 . pad
     , ppVisible = xmobarColor solBase02 solYellow . visibleLeftWrap . pad
     , ppVisibleNoWindows = Just (\wsId -> xmobarColor solBase1 "" wsId)
     , ppTitle   = xmobarColor solBase01  "" . shorten 40
@@ -116,8 +116,8 @@ myPP = def
     }
     where
       currentLeftWrap = wrap
-                          (xmobarColor solOrange "" "\57556")
-                          (xmobarColor solOrange "" "\57554")
+                          (xmobarColor solBase02 "" "\57556")
+                          (xmobarColor solBase02 "" "\57554")
       visibleLeftWrap = wrap
                           (xmobarColor solYellow "" "\57556")
                           (xmobarColor solYellow "" "\57554")

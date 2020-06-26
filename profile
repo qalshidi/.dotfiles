@@ -5,6 +5,7 @@
 # PATH
 export MY_NIX_PROFILE=$HOME/.nix-profile/etc/profile.d/nix.sh
 [ -f $MY_NIX_PROFILE ] && . $MY_NIX_PROFILE
+[ -d $HOME/.cabal/bin ] && export PATH=$HOME/.cabal/bin:$PATH
 export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 
 #env
