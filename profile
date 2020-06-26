@@ -61,8 +61,8 @@ if [ $(uname) = 'Linux' ]; then
             setxkbmap -option ctrl:nocaps
             xmodmap -e "keycode 23 = Hyper_L"
             xmodmap -e "keycode any = Tab"  
-            xmodmap -e "keycode 51 = Hyper_R"
-            xmodmap -e "keycode any = backslash"  
+            xmodmap -e "keycode 51 = Hyper_R NoSymbol Hyper_R NoSymbol"
+            xmodmap -e "keycode any = backslash bar backslash bar"  
             xcape -e "Hyper_L=Tab;Hyper_R=backslash"
         fi
         export IS_KEYS_MAPPED="yes"

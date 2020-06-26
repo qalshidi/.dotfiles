@@ -7,6 +7,7 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing
 import qualified XMonad.StackSet as W
+import XMonad.Layout.ThreeColumns
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.SpawnOnce
@@ -64,6 +65,7 @@ myManageHook = composeAll
 myKeys = 
     [ ((myModMask, xK_p), spawn myProgramLauncher)
     , ((myModMask, xK_space), spawn myTerminal)
+    , ((myModMask, xK_Tab), sendMessage NextLayout)
     , ((myModMask, xK_backslash), spawn $ myTerminal ++ " -e ranger")
     , ((myModMask, xK_BackSpace), kill)
     , ((myModMask, xK_v), spawn "pavucontrol")
@@ -126,7 +128,7 @@ myPP = def
 
 -- Layout
 -- ======
-myLayout = tiled ||| (Mirror tiled) ||| noBorders Full
+myLayout = tiled ||| (Mirror tiled) ||| noBorders Full ||| ThreeColMid 1 (3/100) (1/2)
   where
     -- default tiling algorithm partitions the screen into two panes
     tiled   = Tall nmaster delta ratio
