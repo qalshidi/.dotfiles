@@ -1,3 +1,5 @@
+#!/bin/bash
+#
 # Initial environment
 # ~/.profile
 #
@@ -59,6 +61,7 @@ if [ $(uname) = 'Linux' ]; then
         # space as hyper
         if [ ! "$IS_KEYS_MAPPED" ]; then
             setxkbmap -option ctrl:nocaps
+            xmodmap $XDG_CONFIG_HOME/Xmodmap
             xmodmap -e "keycode 23 = Hyper_L"
             xmodmap -e "keycode any = Tab"  
             xmodmap -e "keycode 51 = Hyper_R NoSymbol Hyper_R NoSymbol"

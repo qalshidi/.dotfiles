@@ -64,9 +64,11 @@ myManageHook = composeAll
 
 myKeys = 
     [ ((myModMask, xK_p), spawn myProgramLauncher)
-    , ((myModMask, xK_space), spawn myTerminal)
+    , ((myModMask, xK_backslash), spawn myTerminal)
     , ((myModMask, xK_Tab), sendMessage NextLayout)
-    , ((myModMask, xK_backslash), spawn $ myTerminal ++ " -e ranger")
+    , ((myModMask .|. controlMask, xK_j), windows W.swapDown)
+    , ((myModMask .|. controlMask, xK_k), windows W.swapUp)
+    , ((myModMask .|. controlMask, xK_backslash), spawn $ myTerminal ++ " -e ranger")
     , ((myModMask, xK_BackSpace), kill)
     , ((myModMask, xK_v), spawn "pavucontrol")
     , ((myModMask, xK_F5), spawn "env HOME=$XDG_DATA_HOME firefox")
@@ -128,7 +130,7 @@ myPP = def
 
 -- Layout
 -- ======
-myLayout = tiled ||| (Mirror tiled) ||| noBorders Full ||| ThreeColMid 1 (3/100) (1/2)
+myLayout =  threecol ||| tiled ||| (Mirror tiled) ||| noBorders Full
   where
     -- default tiling algorithm partitions the screen into two panes
     tiled   = Tall nmaster delta ratio
@@ -138,6 +140,7 @@ myLayout = tiled ||| (Mirror tiled) ||| noBorders Full ||| ThreeColMid 1 (3/100)
     ratio   = 1/2
     -- Percent of screen to increment by when resizing panes
     delta   = 3/100
+    threecol = ThreeColMid nmaster delta ratio
 
 myLayoutHook
     = smartBorders
