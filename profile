@@ -1,5 +1,3 @@
-#!/bin/bash
-#
 # Initial environment
 # ~/.profile
 #
@@ -56,12 +54,11 @@ export IDL_DLM_PATH=+$XDG_DATA_HOME/idl:'<IDL_DEFAULT>'
 if [ $(uname) = 'Linux' ]; then
 
     # X11 specific
-    if [ $DISPLAY ]; then
+    if [ "$DISPLAY" ]; then
         xrdb -I$XDG_CONFIG_HOME/X11 $XDG_CONFIG_HOME/X11/Xresources
         # space as hyper
-        if [ ! "$IS_KEYS_MAPPED" ]; then
+        if [ -z "$IS_KEYS_MAPPED" ]; then
             setxkbmap -option ctrl:nocaps
-            xmodmap $XDG_CONFIG_HOME/Xmodmap
             xmodmap -e "keycode 23 = Hyper_L"
             xmodmap -e "keycode any = Tab"  
             xmodmap -e "keycode 51 = Hyper_R NoSymbol Hyper_R NoSymbol"
@@ -81,4 +78,4 @@ extend=$HOME/.profile.extend.sh
 [ -f $extend ] && . $extend
 
 # Run custom shell
-[ $(echo $- | grep i) ] && [ -n $SHELL ] && exec $SHELL -l
+[ $(echo $- | grep i) ] && [ -n "$SHELL" ] && exec $SHELL -l

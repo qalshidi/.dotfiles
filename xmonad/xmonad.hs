@@ -52,56 +52,59 @@ myStartupHook = do
 myManageHook :: Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
     [ className =? "lxqt-openssh-askpass" --> doFloat
-    , className =? "Xmessage" --> doFloat
-    , className =? "mpv" --> doFloat
-    , className =? "KeePassXC" --> doIgnore
-    , className =? "firefox" --> doShift "5:browser"
-    , className =? "spotify" --> doShift "8:music"
-    , className =? "Steam" --> doShift "9:steam"
-    , isFullscreen --> doFullFloat
+    , className =? "Xmessage"             --> doFloat
+    , className =? "mpv"                  --> doFloat
+    , className =? "KeePassXC"            --> doIgnore
+    , className =? "thunderbird"          --> doShift "4:email"
+    , className =? "firefox"              --> doShift "5:browser"
+    , className =? "spotify"              --> doShift "8:music"
+    , className =? "Steam"                --> doShift "9:steam"
+    , isFullscreen                        --> doFullFloat
     , manageDocks
     ]
 
 myKeys = 
-    [ ((myModMask, xK_p), spawn myProgramLauncher)
-    , ((myModMask, xK_backslash), spawn myTerminal)
-    , ((myModMask, xK_Tab), sendMessage NextLayout)
-    , ((myModMask .|. controlMask, xK_j), windows W.swapDown)
-    , ((myModMask .|. controlMask, xK_k), windows W.swapUp)
+    [ ((myModMask                , xK_p        ), spawn myProgramLauncher)
+    , ((myModMask                , xK_backslash), spawn myTerminal)
+    , ((myModMask                , xK_Tab      ), sendMessage NextLayout)
+    , ((myModMask .|. controlMask, xK_j        ), windows W.swapDown)
+    , ((myModMask .|. controlMask, xK_k        ), windows W.swapUp)
     , ((myModMask .|. controlMask, xK_backslash), spawn $ myTerminal ++ " -e ranger")
-    , ((myModMask, xK_BackSpace), kill)
-    , ((myModMask, xK_v), spawn "pavucontrol")
-    , ((myModMask, xK_F5), spawn "env HOME=$XDG_DATA_HOME firefox")
-    , ((myModMask, xK_F6), spawn "$TERMINAL -e nvim ~/Documents/Todo.markdown ")
-    , ((myModMask, xK_F8), spawn "env HOME=$XDG_DATA_HOME spotify")
-    , ((myModMask, xK_F9), spawn "env HOME=$XDG_DATA_HOME steam")
-    , ((myModMask, xK_Print), spawn "sleep 0.2; scrot -s ~/Pictures/Screenshots/screenshot.png")
-    , ((0, xK_Print), spawn "sleep 0.2; scrot ~/Pictures/Screenshots/screenshot.png")
-    , ((myModMask, xK_Escape), spawn "lxqt-leave")
-    , ((0, 0x1008FF11), spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
-    , ((0, 0x1008FF13), spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
-    , ((0, 0x1008FF12), spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
-    , ((0, 0x1008FF02), spawn "lxqt-backlight_backend --inc")
-    , ((0, 0x1008FF03), spawn "lxqt-backlight_backend --dec")
+    , ((myModMask                , xK_BackSpace), kill)
+    , ((myModMask                , xK_v        ), spawn "pavucontrol")
+    , ((myModMask                , xK_F4       ), spawn "thunderbird")
+    , ((myModMask                , xK_F5       ), spawn "env HOME=$XDG_DATA_HOME firefox")
+    , ((myModMask                , xK_F6       ), spawn "$TERMINAL -e nvim ~/Documents/Todo.markdown ")
+    , ((myModMask                , xK_F8       ), spawn "env HOME=$XDG_DATA_HOME spotify")
+    , ((myModMask                , xK_F9       ), spawn "env HOME=$XDG_DATA_HOME steam")
+    , ((myModMask                , xK_Print    ), spawn "sleep 0.2; scrot -s ~/Pictures/Screenshots/screenshot.png")
+    , ((0                        , xK_Print    ),  spawn "sleep 0.2; scrot ~/Pictures/Screenshots/screenshot.png")
+    , ((myModMask                , xK_Escape   ), spawn "lxqt-leave")
+    , ((0                        , 0x1008FF11  ), spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
+    , ((0                        , 0x1008FF13  ), spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
+    , ((0                        , 0x1008FF12  ), spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
+    , ((0                        , 0x1008FF02  ), spawn "lxqt-backlight_backend --inc")
+    , ((0                        , 0x1008FF03  ), spawn "lxqt-backlight_backend --dec")
     -- Quit xmonad
-    , ((myModMask .|. shiftMask, xK_Escape), io (exitWith ExitSuccess))
+    , ((myModMask .|. shiftMask  , xK_Escape   ), io (exitWith ExitSuccess))
     -- Restart xmonad
-    , ((myModMask, xK_r), spawn "xmonad --recompile; xmonad --restart")
+    , ((myModMask                , xK_r        ), spawn "xmonad --recompile; xmonad --restart")
     ]
 
     -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
     -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
     --
     ++
-    [((m .|. myModMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+    [ ((m .|. myModMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
         | (key, sc) <- zip [xK_q, xK_w, xK_e] [0..]
-        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
+    ]
 
 myWorkspaces =
     [ "1"
     , "2"
     , "3"
-    , "4"
+    , "4:email"
     , "5:browser"
     , "6:work"
     , "7"
@@ -156,15 +159,15 @@ main :: IO()
 main = do
     xmproc <- spawnPipe "xmobar"
     xmonad $ desktopConfig
-        { manageHook = myManageHook <+> manageHook desktopConfig
-        , handleEventHook = fullscreenEventHook <+> handleEventHook desktopConfig
-        , layoutHook = desktopLayoutModifiers myLayoutHook
-        , modMask = myModMask
-        , startupHook = myStartupHook <+> startupHook desktopConfig
-        , terminal = myTerminal
-        , normalBorderColor = solCyan
+        { manageHook         = myManageHook <+> manageHook desktopConfig
+        , handleEventHook    = fullscreenEventHook <+> handleEventHook desktopConfig
+        , layoutHook         = desktopLayoutModifiers myLayoutHook
+        , modMask            = myModMask
+        , startupHook        = myStartupHook <+> startupHook desktopConfig
+        , terminal           = myTerminal
+        , normalBorderColor  = solCyan
         , focusedBorderColor = solOrange
-        , logHook = dynamicLogWithPP $ myPP { ppOutput = hPutStrLn xmproc }
-        , workspaces = myWorkspaces
-        , borderWidth = 3
+        , logHook            = dynamicLogWithPP $ myPP { ppOutput = hPutStrLn xmproc }
+        , workspaces         = myWorkspaces
+        , borderWidth        = 3
         } `additionalKeys` myKeys
