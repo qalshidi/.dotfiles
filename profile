@@ -20,13 +20,16 @@ export QT_QPA_PLATFORMTHEME=lxqt
 export XDG_CURRENT_DESKTOP="LXQt"
 export MAKEFLAGS=-j$(($(nproc)+1))
 
+function program_exists {
+    whereis $1 | grep bin
+}
 # default programs
 export VISUAL=vim
 export EDITOR=vim
-[ -n "$(whereis nvim | grep bin)" ] && export EDITOR=$(which nvim) && export VISUAL=$(which nvim)
-[ -n "$(whereis alacritty | grep bin)" ] && export TERMINAL=$(which alacritty)
-[ -n "$(whereis fish | grep bin)" ] && export SHELL=$(which fish)
-[ -n "$(whereis lxqt-openssh-askpass | grep bin)" ] && export SUDO_ASKPASS=$(which lxqt-openssh-askpass)
+[ -n "$(program_exists nvim)" ] && export EDITOR=$(which nvim) && export VISUAL=$(which nvim)
+[ -n "$(program_exists alacritty)" ] && export TERMINAL=$(which alacritty)
+[ -n "$(program_exists fish)" ] && export SHELL=$(which fish)
+[ -n "$(program_exists lxqt-openssh-askpass)" ] && export SUDO_ASKPASS=$(which lxqt-openssh-askpass)
 
 # Change where configuration files go
 # xdg
@@ -71,7 +74,15 @@ if [ $(uname) = 'Linux' ]; then
 fi
 
 # welcome message
-[ -n "$(whereis colorscript | grep bin)" ] && colorscript -e 40
+if [ -n "$(program_exists neofetch)" ]; then
+    if [ -n "$(program_exists fortune)" ]; then
+        welcome="$(fortune)"
+        if [ -n "$(program_exists cowsay)" ]; then
+            welcome="$(echo $welcome | cowsay -W30)"
+        fi
+    fi
+    neofetch --memory_display infobar --disable term_font de resolution --ascii "$welcome"
+fi
 
 # Per computer options
 extend=$HOME/.profile.extend.sh
