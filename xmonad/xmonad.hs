@@ -54,7 +54,6 @@ myManageHook = composeAll
     [ className =? "lxqt-openssh-askpass" --> doFloat
     , className =? "Xmessage"             --> doFloat
     , className =? "mpv"                  --> doFloat
-    , className =? "KeePassXC"            --> doIgnore
     , className =? "thunderbird"          --> doShift "4:email"
     , className =? "firefox"              --> doShift "5:browser"
     , className =? "spotify"              --> doShift "8:music"
