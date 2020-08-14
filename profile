@@ -90,3 +90,5 @@ extend=$HOME/.profile.extend.sh
 
 # Run custom shell
 [ $(echo $- | grep i) ] && [ -n "$SHELL" ] && exec $SHELL -l
+
+# vim:filetype=bash
