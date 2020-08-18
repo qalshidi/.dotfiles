@@ -72,7 +72,7 @@ myKeys =
     , ((myModMask                , xK_BackSpace), kill)
     , ((myModMask                , xK_v        ), spawn "pavucontrol")
     , ((myModMask                , xK_F4       ), spawn "thunderbird")
-    , ((myModMask                , xK_F5       ), spawn "env HOME=$XDG_DATA_HOME firefox")
+    , ((myModMask                , xK_F5       ), spawn "firefox")
     , ((myModMask                , xK_F6       ), spawn "$TERMINAL -e nvim ~/Documents/Todo.markdown ")
     , ((myModMask                , xK_F8       ), spawn "env HOME=$XDG_DATA_HOME spotify")
     , ((myModMask                , xK_F9       ), spawn "env HOME=$XDG_DATA_HOME steam")

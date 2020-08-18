@@ -36,6 +36,7 @@ export EDITOR=vim
 [ -z $XDG_CONFIG_HOME ] && export XDG_CONFIG_HOME=$HOME/.config
 [ -z $XDG_CACHE_HOME ] && export XDG_CACHE_HOME=$HOME/.cache
 [ -z $XDG_DATA_HOME ] && export XDG_DATA_HOME=$HOME/.local/share
+[ -f $XDG_DATA_HOME/cargo/env ] && source $XDG_DATA_HOME/cargo/env
 # progs
 export TMUX_TMPDIR=$XDG_CACHE_HOME
 export GNUPGHOME=$XDG_DATA_HOME/gnupg
