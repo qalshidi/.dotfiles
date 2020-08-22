@@ -6,6 +6,7 @@
 export MY_NIX_PROFILE=$HOME/.nix-profile/etc/profile.d/nix.sh
 [ -f $MY_NIX_PROFILE ] && . $MY_NIX_PROFILE
 [ -f $HOME/.ghcup/env ] && . $HOME/.ghcup/env
+[ -d /opt/intel/bin ] && export PATH=/opt/intel/bin:$PATH
 export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 
 #env
@@ -54,6 +55,7 @@ export SHIV_ROOT=$XDG_DATA_HOME/shiv
 export AUDACITY_PATH=$XDG_DATA_HOME/audacity
 export IDL_PATH=+$XDG_DATA_HOME/idl:'<IDL_DEFAULT>'
 export IDL_DLM_PATH=+$XDG_DATA_HOME/idl:'<IDL_DEFAULT>'
+export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/ripgreprc
 
 if [ $(uname) = 'Linux' ]; then
 
