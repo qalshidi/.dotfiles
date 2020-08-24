@@ -1,0 +1,1 @@
+/home/qusai/.vim/init.nvim
