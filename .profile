@@ -22,12 +22,12 @@ export XDG_CURRENT_DESKTOP="LXQt"
 export MAKEFLAGS=-j$(($(nproc)+1))
 
 function program_exists {
-    whereis $1 | grep bin
+    which $1 2> /dev/null
 }
 # default programs
 export VISUAL=vim
 export EDITOR=vim
-[ -n "$(program_exists nvim)" ] && export EDITOR=$(which nvim) && export VISUAL=$(which nvim)
+[ -n "$(program_exists nvim)" ] && export EDITOR=$(which nvim) && export VISUAL=$(which nvim) && alias vim="$(which nvim)"
 [ -n "$(program_exists alacritty)" ] && export TERMINAL=$(which alacritty)
 [ -n "$(program_exists fish)" ] && export SHELL=$(which fish)
 [ -n "$(program_exists lxqt-openssh-askpass)" ] && export SUDO_ASKPASS=$(which lxqt-openssh-askpass)
