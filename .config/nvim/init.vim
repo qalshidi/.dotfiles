@@ -1,1 +1,3 @@
-/home/qusai/.vim/init.nvim
+set runtimepath^=~/.vim runtimepath+=~/.vim/after
+let &packpath=&runtimepath
+source ~/.vim/vimrc
