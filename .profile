@@ -86,6 +86,7 @@ if [ -n "$(program_exists neofetch)" ]; then
     fi
     neofetch --memory_display infobar --disable term_font de resolution --ascii "$welcome"
 fi
+[ -f /tmp/weather ] && cat /tmp/weather
 
 # Per computer options
 extend=$HOME/.profile.extend.sh
