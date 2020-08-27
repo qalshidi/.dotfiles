@@ -2,6 +2,32 @@
 # ~/.profile
 #
 
+# Change where configuration files go
+# xdg
+[ -z $XDG_CONFIG_HOME ] && export XDG_CONFIG_HOME=$HOME/.config
+[ -z $XDG_CACHE_HOME ] && export XDG_CACHE_HOME=$HOME/.cache
+[ -z $XDG_DATA_HOME ] && export XDG_DATA_HOME=$HOME/.local/share
+[ -f $XDG_DATA_HOME/cargo/env ] && source $XDG_DATA_HOME/cargo/env
+[ -f $HOME/.xdg.env ] && . $HOME/.xdg.env
+
+# string if exists return no stderr if not
+function program_exists {
+    which $1 > /dev/null 2>&1
+}
+
+# Run tmux
+alias tmux='tmux -f $XDG_CONFIG_HOME/tmux.conf'
+[ $(echo $- | grep i) ] \
+    && program_exists tmux \
+    && [ -z "$TMUX" ] \
+    && unset SHELL \
+    && export ATTACH_ID="$(tmux ls | grep -vm1 attached | cut -d: -f1 )" \
+    && if [ -z "$ID" ]; then # if not available create a new one
+        exec tmux new-session
+    else
+        exec tmux attach-session -t "$ATTACH_ID" # if available attach to it
+    fi
+
 # PATH
 export MY_NIX_PROFILE=$HOME/.nix-profile/etc/profile.d/nix.sh
 [ -f $MY_NIX_PROFILE ] && . $MY_NIX_PROFILE
@@ -21,23 +47,14 @@ export QT_QPA_PLATFORMTHEME=lxqt
 export XDG_CURRENT_DESKTOP="LXQt"
 export MAKEFLAGS=-j$(($(nproc)+1))
 
-function program_exists {
-    which $1 2> /dev/null
-}
 # default programs
 export VISUAL=vim
 export EDITOR=vim
-[ -n "$(program_exists nvim)" ] && export EDITOR=$(which nvim) && export VISUAL=$(which nvim) && alias vim="$(which nvim)"
-[ -n "$(program_exists alacritty)" ] && export TERMINAL=$(which alacritty)
-[ -n "$(program_exists fish)" ] && export SHELL=$(which fish)
-[ -n "$(program_exists lxqt-openssh-askpass)" ] && export SUDO_ASKPASS=$(which lxqt-openssh-askpass)
+program_exists nvim && export EDITOR=$(which nvim) && export VISUAL=$(which nvim) && alias vim="$(which nvim)"
+program_exists alacritty && export TERMINAL=$(which alacritty)
+program_exists fish && export SHELL=$(which fish)
+program_exists lxqt-openssh-askpass && export SUDO_ASKPASS=$(which lxqt-openssh-askpass)
 
-# Change where configuration files go
-# xdg
-[ -z $XDG_CONFIG_HOME ] && export XDG_CONFIG_HOME=$HOME/.config
-[ -z $XDG_CACHE_HOME ] && export XDG_CACHE_HOME=$HOME/.cache
-[ -z $XDG_DATA_HOME ] && export XDG_DATA_HOME=$HOME/.local/share
-[ -f $XDG_DATA_HOME/cargo/env ] && source $XDG_DATA_HOME/cargo/env
 # progs
 export TMUX_TMPDIR=$XDG_CACHE_HOME
 export GNUPGHOME=$XDG_DATA_HOME/gnupg
@@ -77,11 +94,11 @@ if [ $(uname) = 'Linux' ]; then
 fi
 
 # welcome message
-if [ -n "$(program_exists neofetch)" ]; then
-    if [ -n "$(program_exists fortune)" ]; then
+if program_exists neofetch; then
+    if program_exists fortune; then
         welcome="$(fortune)"
-        if [ -n "$(program_exists cowsay)" ]; then
-            welcome="$(echo $welcome | cowsay -W30)"
+        if program_exists cowsay; then
+            welcome="$(cowsay -W30 $welcome)"
         fi
     fi
     neofetch --memory_display infobar --disable term_font de resolution --ascii "$welcome"
@@ -93,6 +110,6 @@ extend=$HOME/.profile.extend.sh
 [ -f $extend ] && . $extend
 
 # Run custom shell
-[ $(echo $- | grep i) ] && [ -n "$SHELL" ] && exec $SHELL -l
+[ $(echo $- | grep i) ] && [ $SHELL ] && exec $SHELL -l
 
 # vim:filetype=bash
