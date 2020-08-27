@@ -64,6 +64,7 @@ myManageHook = composeAll
 
 myKeys = 
     [ ((myModMask                , xK_p        ), spawn myProgramLauncher)
+    , ((myModMask                , xK_s        ), spawn mySSHLauncher)
     , ((myModMask                , xK_backslash), spawn myTerminal)
     , ((myModMask                , xK_Tab      ), sendMessage NextLayout)
     , ((myModMask .|. controlMask, xK_j        ), windows W.swapDown)

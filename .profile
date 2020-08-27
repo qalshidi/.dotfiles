@@ -22,10 +22,10 @@ alias tmux='tmux -f $XDG_CONFIG_HOME/tmux.conf'
     && [ -z "$TMUX" ] \
     && unset SHELL \
     && export ATTACH_ID="$(tmux ls | grep -vm1 attached | cut -d: -f1 )" \
-    && if [ -z "$ID" ]; then # if not available create a new one
-        exec tmux new-session
+    && if [ -z "$ATTACH_ID" ]; then # if not available create a new one
+        exec tmux -f $XDG_CONFIG_HOME/tmux.conf new-session 
     else
-        exec tmux attach-session -t "$ATTACH_ID" # if available attach to it
+        exec tmux -f $XDG_CONFIG_HOME/tmux.conf attach-session -t "$ATTACH_ID" # if available attach to it
     fi
 
 # PATH
