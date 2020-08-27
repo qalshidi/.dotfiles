@@ -28,7 +28,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%UnsafeStdinReader% | %schedule% }{ %multicpu% / %coretemp% / %memory% / %KARB% / %date% "
+   , template = "%UnsafeStdinReader% | %schedule% }{ %multicpu% / %coretemp% / %memory% / %date% "
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -54,11 +54,8 @@ Config {
    --   see http://projects.haskell.org/xmobar/#system-monitor-plugins.
    , commands = 
 
-        -- weather monitor
-        [ Run Weather "KARB" ["-t","<skyCondition> | <tempC>C | <windMph>mph"] 18000
-
         -- StdinReader
-        , Run UnsafeStdinReader
+        [ Run UnsafeStdinReader
 
         -- schedule 
         , Run Com "cat" ["/tmp/next_cal_event"] "schedule" 60
