@@ -64,6 +64,7 @@ myManageHook = composeAll
 
 myKeys = 
     [ ((myModMask                , xK_p        ), spawn myProgramLauncher)
+    , ((myModMask .|. shiftMask  , xK_p        ), spawn "rofipass")
     , ((myModMask                , xK_s        ), spawn mySSHLauncher)
     , ((myModMask                , xK_backslash), spawn myTerminal)
     , ((myModMask                , xK_Tab      ), sendMessage NextLayout)
