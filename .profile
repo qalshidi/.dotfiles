@@ -1,3 +1,5 @@
+#!/bin/bash
+#
 # Initial environment
 # ~/.profile
 #
@@ -77,7 +79,7 @@ export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/ripgreprc
 if [ $(uname) = 'Linux' ]; then
 
     # X11 specific
-    if [ "$DISPLAY" ]; then
+    if [[ "$DISPLAY" == ":"* ]]; then
         xrdb -I$XDG_CONFIG_HOME/X11 $XDG_CONFIG_HOME/X11/Xresources
         # space as hyper
         if [ -z "$IS_KEYS_MAPPED" ]; then
