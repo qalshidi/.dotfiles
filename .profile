@@ -100,7 +100,7 @@ if program_exists neofetch; then
     if program_exists fortune; then
         welcome="$(fortune)"
         if program_exists cowsay; then
-            welcome="$(cowsay -W30 $welcome)"
+            welcome=$(cowsay -W30 "$welcome")
         fi
     fi
     neofetch --memory_display infobar --disable term_font de resolution --ascii "$welcome"
