@@ -83,12 +83,16 @@ if [ $(uname) = 'Linux' ]; then
         xrdb -I$XDG_CONFIG_HOME/X11 $XDG_CONFIG_HOME/X11/Xresources
         # space as hyper
         if [ -z "$IS_KEYS_MAPPED" ]; then
+            spare_modifier_1="Hyper_L"
+            spare_modifier_2="Hyper_R"
+            setxkbmap -layout 'us'
             setxkbmap -option ctrl:nocaps
-            xmodmap -e "keycode 23 = Hyper_L"
-            xmodmap -e "keycode any = Tab"  
-            xmodmap -e "keycode 51 = Hyper_R NoSymbol Hyper_R NoSymbol"
+            xmodmap -e "keycode 23 = $spare_modifier_1"
+            xmodmap -e "remove mod4 = $spare_modifier_1"
+            xmodmap -e "keycode any = Tab"
+            xmodmap -e "keycode 51 = $spare_modifier_2 $spare_modifier_2 $spare_modifier_2 $spare_modifier_2"
             xmodmap -e "keycode any = backslash bar backslash bar"  
-            xcape -e "Hyper_L=Tab;Hyper_R=backslash"
+            xcape -t 500 -e "Hyper_L=Tab;Hyper_R=backslash"
         fi
         export IS_KEYS_MAPPED="yes"
     fi
