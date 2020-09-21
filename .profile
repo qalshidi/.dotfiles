@@ -52,7 +52,7 @@ export MAKEFLAGS=-j$(($(nproc)+1))
 # default programs
 export VISUAL=vim
 export EDITOR=vim
-program_exists nvim && export EDITOR=$(which nvim) && export VISUAL=$(which nvim) && alias vim="$(which nvim)"
+program_exists nvim && export EDITOR=$(which nvim) && export VISUAL=$(which nvim) && alias vim="$(which nvim)" && export MANPAGER='nvim +Man!'
 program_exists alacritty && export TERMINAL=$(which alacritty)
 program_exists fish && export SHELL=$(which fish)
 program_exists lxqt-openssh-askpass && export SUDO_ASKPASS=$(which lxqt-openssh-askpass)
@@ -91,7 +91,7 @@ if [ $(uname) = 'Linux' ]; then
             xmodmap -e "remove mod4 = $spare_modifier_1"
             xmodmap -e "keycode any = Tab"
             xmodmap -e "keycode 51 = $spare_modifier_2 $spare_modifier_2 $spare_modifier_2 $spare_modifier_2"
-            xmodmap -e "keycode any = backslash bar backslash bar"  
+            xmodmap -e "keycode any = backslash bar backslash bar"
             xcape -t 500 -e "Hyper_L=Tab;Hyper_R=backslash"
         fi
         export IS_KEYS_MAPPED="yes"
