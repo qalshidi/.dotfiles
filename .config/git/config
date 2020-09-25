@@ -1,0 +1,32 @@
+[http]
+  postBuffer = 524288000
+[user]
+  name = Qusai Al Shidi
+  email = me@qalshidi.science
+  signingkey = A3F5E7A4ADD746EC
+[merge]
+  tool = vimdiff
+[mergetool]
+  prompt = false
+[mergetool "vimdiff"]
+  cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[git]
+  pull = rebase
+[commit]
+  gpgsign = true
+[pull]
+  rebase = true
+[color]
+  ui = true
+[init]
+  templatedir = ~/.config/git_template
+  defaultBranch = main
+[alias]
+  ctags = !.git/hooks/ctags
+[pager]
+  diff = less -igFMR --pattern=\"^(commit|diff)\"
+  log = less -igFMR --pattern=\"^(commit|diff)\"
+  show = less -igFMR --pattern=\"^(commit|diff)\"
+  show-branch = true
+  status = true
+  whatchanged = less -igFMR --pattern=\"^(commit|diff)\"

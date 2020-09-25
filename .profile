@@ -49,11 +49,12 @@ export QT_QPA_PLATFORMTHEME=lxqt
 export XDG_CURRENT_DESKTOP="LXQt"
 export MAKEFLAGS=-j$(($(nproc)+1))
 export BAT_THEME="Solarized (dark)"
+export LESS="-iFRX"
 
 # default programs
 export VISUAL=vim
 export EDITOR=vim
-program_exists nvim && export EDITOR=$(which nvim) && export VISUAL=$(which nvim) && alias vim="$(which nvim)" && export MANPAGER='nvim +Man!'
+program_exists nvim && export EDITOR=$(which nvim) && export VISUAL=$(which nvim) && alias vim="$(which nvim)" && export MANPAGER="nvim +Man! +Goyo +'autocmd User GoyoLeave nested q'"
 program_exists alacritty && export TERMINAL=$(which alacritty)
 program_exists fish && export SHELL=$(which fish)
 program_exists lxqt-openssh-askpass && export SUDO_ASKPASS=$(which lxqt-openssh-askpass)
