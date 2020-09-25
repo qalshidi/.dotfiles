@@ -48,6 +48,7 @@ export QT_PLATFORM_PLUGIN=lxqt
 export QT_QPA_PLATFORMTHEME=lxqt
 export XDG_CURRENT_DESKTOP="LXQt"
 export MAKEFLAGS=-j$(($(nproc)+1))
+export BAT_THEME="Solarized (dark)"
 
 # default programs
 export VISUAL=vim
