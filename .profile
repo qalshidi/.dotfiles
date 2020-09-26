@@ -57,6 +57,11 @@ export EDITOR=vim
 program_exists nvim && export EDITOR=$(which nvim) && export VISUAL=$(which nvim) && alias vim="$(which nvim)" && export MANPAGER="nvim +Man! +Goyo +'autocmd User GoyoLeave nested q'"
 program_exists alacritty && export TERMINAL=$(which alacritty)
 program_exists fish && export SHELL=$(which fish)
+# askpass
+program_exists ssh-askpass && export SUDO_ASKPASS=$(which ssh-askpass)
+program_exists x11-ssh-askpass && export SUDO_ASKPASS=$(which x11-ssh-askpass)
+program_exists openssh-askpass && export SUDO_ASKPASS=$(which openssh-askpass)
+program_exists lxqt-openssh-askpass && export SUDO_ASKPASS=$(which lxqt-openssh-askpass)
 program_exists lxqt-openssh-askpass && export SUDO_ASKPASS=$(which lxqt-openssh-askpass)
 
 # progs
