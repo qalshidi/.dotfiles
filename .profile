@@ -50,6 +50,7 @@ export XDG_CURRENT_DESKTOP="LXQt"
 export MAKEFLAGS=-j$(($(nproc)+1))
 export BAT_THEME="Solarized (dark)"
 export LESS="-iFRX"
+program_exists vivid && export LS_COLORS="$(vivid generate solarized-dark)"
 
 # default programs
 export VISUAL=vim
