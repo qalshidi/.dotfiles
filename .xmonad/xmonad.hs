@@ -45,9 +45,9 @@ solGreen = "#859900"
 
 myStartupHook :: X ()
 myStartupHook = do
-    spawnOnce "dbus-launch --sh-syntax --exit-with-session &"
     spawnOnce "lxqt-session &"
     spawnOnce "lxqt-policykit-agent &"
+    spawnOnce "udiskie &>> /tmp/udiskie.log &"
 
 myManageHook :: Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
