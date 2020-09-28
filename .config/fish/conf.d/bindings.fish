@@ -6,5 +6,6 @@ bind \ez 'fg 2>/dev/null; commandline -f repaint'
 # skim
 if type -q skim_key_bindings
     skim_key_bindings
-    bind \ed skim-cd-widget
+    set skimcmd (__skimcmd)
+    bind \eg "$skimcmd --ansi -i -c 'rg --color=always --line-number {}'"
 end

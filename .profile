@@ -52,14 +52,13 @@ export MAKEFLAGS=-j$(($(nproc)+1))
 export BAT_THEME="Solarized (dark)"
 export LESS="-iFRX"
 program_exists vivid && export LS_COLORS="$(vivid generate solarized-dark)"
-program_exists fd && export SKIM_DEFAULT_COMMAND="fd --type f --color=always " \
-                  && export SKIM_DEFAULT_OPTIONS="--ansi" \
-                  && export FZF_DEFAULT_OPTS="--ansi" \
-                  && export FZF_DEFAULT_COMMAND="$SKIM_DEFAULT_COMMAND" \
-                  && export FZF_CTRL_T_COMMAND="$SKIM_DEFAULT_COMMAND" \
-                  && export SKIM_CTRL_T_COMMAND="$FZF_CTRL_T_COMMAND -L \$dir" \
-                  && program_exists bat && export SKIM_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always --line-range :500 {}'" \
-                  && export FZF_CTRL_T_OPTS="$SKIM_CTRL_T_OPTS"
+export SKIM_DEFAULT_COMMAND="fd --type f --color=always || git ls-tree -r --name-only HEAD || rg --files || find ."
+export SKIM_DEFAULT_OPTIONS="--ansi"
+export FZF_DEFAULT_OPTS="--ansi" 
+export FZF_DEFAULT_COMMAND="$SKIM_DEFAULT_COMMAND"
+export FZF_CTRL_T_COMMAND="$SKIM_DEFAULT_COMMAND -L \$dir" 
+export SKIM_CTRL_T_COMMAND="$FZF_CTRL_T_COMMAND"
+program_exists bat && export SKIM_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always --line-range :500 {}'" && export FZF_CTRL_T_OPTS="$SKIM_CTRL_T_OPTS"
 
 # default programs
 export VISUAL=vim
