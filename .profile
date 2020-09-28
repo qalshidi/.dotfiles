@@ -29,6 +29,7 @@ alias tmux='tmux -f $XDG_CONFIG_HOME/tmux.conf'
     else
         exec tmux -f $XDG_CONFIG_HOME/tmux.conf attach-session -t "$ATTACH_ID" # if available attach to it
     fi
+[ -n "$TMUX" ] && export SKIM_TMUX=1
 
 # PATH
 export MY_NIX_PROFILE=$HOME/.nix-profile/etc/profile.d/nix.sh
@@ -51,6 +52,14 @@ export MAKEFLAGS=-j$(($(nproc)+1))
 export BAT_THEME="Solarized (dark)"
 export LESS="-iFRX"
 program_exists vivid && export LS_COLORS="$(vivid generate solarized-dark)"
+program_exists fd && export SKIM_DEFAULT_COMMAND="fd --type f --color=always " \
+                  && export SKIM_DEFAULT_OPTIONS="--ansi" \
+                  && export FZF_DEFAULT_OPTS="--ansi" \
+                  && export FZF_DEFAULT_COMMAND="$SKIM_DEFAULT_COMMAND" \
+                  && export FZF_CTRL_T_COMMAND="$SKIM_DEFAULT_COMMAND" \
+                  && export SKIM_CTRL_T_COMMAND="$FZF_CTRL_T_COMMAND -L \$dir" \
+                  && program_exists bat && export SKIM_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always --line-range :500 {}'" \
+                  && export FZF_CTRL_T_OPTS="$SKIM_CTRL_T_OPTS"
 
 # default programs
 export VISUAL=vim

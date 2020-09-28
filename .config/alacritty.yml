@@ -398,7 +398,7 @@ shell:
 key_bindings:
   # (Windows, Linux, and BSD only)
   - { key: V, mods: Alt, action: Paste }
-  - { key: C, mods: Alt, action: Copy }
+  # - { key: C, mods: Alt, action: Copy }
   - { key: Insert,   mods: Shift,         action: PasteSelection   }
   - { key: Key0,     mods: Control,       action: ResetFontSize    }
   - { key: Equals,   mods: Control,       action: IncreaseFontSize }
@@ -410,8 +410,8 @@ key_bindings:
   #- { key: Copy,                     action: Copy                             }
   #- { key: L,         mods: Control, action: ClearLogNotice                   }
   #- { key: L,         mods: Control, chars: "\x0c"                            }
-  - { key: U, mods: Alt, action: ScrollPageUp }
-  - { key: D,  mods: Alt,   action: ScrollPageDown }
+  # - { key: U, mods: Alt, action: ScrollPageUp }
+  # - { key: D,  mods: Alt,   action: ScrollPageDown }
   #- { key: Home,      mods: Shift,   action: ScrollToTop,    mode: ~Alt       }
   #- { key: End,       mods: Shift,   action: ScrollToBottom, mode: ~Alt       }
 
