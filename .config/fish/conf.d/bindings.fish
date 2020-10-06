@@ -4,8 +4,16 @@ bind \cz 'fg 2>/dev/null; commandline -f repaint'
 bind \ez 'fg 2>/dev/null; commandline -f repaint'
 
 # skim
-if type -q skim_key_bindings
-    skim_key_bindings
-    set skimcmd (__skimcmd)
-    bind \eg "$skimcmd --ansi -i -c 'rg --color=always --line-number {}'"
+[ -z $SMIK_TMUX ] && type -q sk-tmux && set skimcmd sk-tmux || set skimcmd sk
+
+if type -q sk
+    bind \eg "skim_grep"
+    bind \ct "commandline -it \'($skimcmd)\'"
+end
+
+function skim_grep
+    set result ($skimcmd --ansi -i -c 'rg --color=always --vimgrep {}' \
+        | sed 's/"/\\\\"/g')
+    sleep 0.001
+    nvim +cexpr!" \"$result\"" -
 end

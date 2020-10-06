@@ -24,9 +24,11 @@
 [alias]
   ctags = !.git/hooks/ctags
 [pager]
-  diff = less -igFMR --pattern=\"^(commit|diff)\"
-  log = less -igFMR --pattern=\"^(commit|diff)\"
-  show = less -igFMR --pattern=\"^(commit|diff)\"
+  diff = bat --plain -l gitlog --pager=\"less -igFMR --pattern=^(commit|diff)\"
+  log = bat --plain -l gitlog --pager=\"less -igFMR --pattern=^(commit|diff)\"
+  show = bat --plain -l gitlog --pager=\"less -igFMR --pattern=^(commit|diff)\"
   show-branch = true
   status = true
   whatchanged = less -igFMR --pattern=\"^(commit|diff)\"
+[grep]
+  patternType = perl
