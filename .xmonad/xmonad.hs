@@ -48,6 +48,7 @@ myStartupHook = do
     spawnOnce "lxqt-session &"
     spawnOnce "lxqt-policykit-agent &"
     spawnOnce "udiskie &>> /tmp/udiskie.log &"
+    spawnOnce "trayer --width 15 --align right --edge top --expand true --height 23 "
 
 myManageHook :: Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
