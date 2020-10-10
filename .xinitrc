@@ -11,7 +11,7 @@ if [[ -f ~/.extend.xinitrc ]];then
 fi
 
 userresources=$XDG_CONFIG_HOME/X11/Xresources
-usermodmap=$HOME/X11/Xmodmap
+usermodmap=$XDG_CONFIG_HOME/X11/Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
 sysmodmap=/etc/X11/xinit/.Xmodmap
 
@@ -22,6 +22,7 @@ if [ -f $sysresources ]; then
 fi
 
 if [ -f $sysmodmap ]; then
+    setxkbmap -layout 'us'
     xmodmap $sysmodmap
 fi
 

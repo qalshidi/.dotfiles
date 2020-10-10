@@ -41,6 +41,9 @@ export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 #env
 export GPG_TTY=$(tty)
 export PACMAN=powerpill
+export PASSWORD_STORE_ENABLE_EXTENSIONS=1
+export PASSWORD_STORE_GENERATED_LENGTH=16
+export PASSWORD_STORE_CHARACTER_SET="[:alnum:]!@#%*,._+=" 
 export STEAM_RUNTIME=1
 export OMP_NUM_THREADS=8
 export OPENBLAS_NUM_THREADS=8
@@ -48,7 +51,7 @@ export TMPDIR=/tmp
 export QT_PLATFORM_PLUGIN=lxqt
 export QT_QPA_PLATFORMTHEME=lxqt
 export XDG_CURRENT_DESKTOP="LXQt"
-export MAKEFLAGS=-j$(($(nproc)+1))
+export MAKEFLAGS=-j$(($(nproc)-1))
 export BAT_THEME="Solarized (dark)"
 export LESS="-iFRX"
 program_exists vivid && export LS_COLORS="$(vivid generate solarized-dark)"
@@ -92,29 +95,6 @@ export IDL_PATH=+$XDG_DATA_HOME/idl:'<IDL_DEFAULT>'
 export IDL_DLM_PATH=+$XDG_DATA_HOME/idl:'<IDL_DEFAULT>'
 export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/ripgreprc
 
-if [ $(uname) = 'Linux' ]; then
-
-    # X11 specific
-    if [[ "$DISPLAY" == ":"* ]]; then
-        xrdb -I$XDG_CONFIG_HOME/X11 $XDG_CONFIG_HOME/X11/Xresources
-        # space as hyper
-        if [ -z "$IS_KEYS_MAPPED" ]; then
-            spare_modifier_1="Hyper_L"
-            spare_modifier_2="Hyper_R"
-            setxkbmap -layout 'us'
-            setxkbmap -option ctrl:nocaps
-            xmodmap -e "keycode 23 = $spare_modifier_1"
-            xmodmap -e "remove mod4 = $spare_modifier_1"
-            xmodmap -e "keycode any = Tab"
-            xmodmap -e "keycode 51 = $spare_modifier_2 $spare_modifier_2 $spare_modifier_2 $spare_modifier_2"
-            xmodmap -e "keycode any = backslash bar backslash bar"
-            xcape -t 500 -e "Hyper_L=Tab;Hyper_R=backslash"
-        fi
-        export IS_KEYS_MAPPED="yes"
-    fi
-
-fi
-
 # welcome message
 if program_exists neofetch; then
     if program_exists fortune; then
@@ -133,5 +113,3 @@ extend=$HOME/.profile.extend.sh
 
 # Run custom shell
 [ $(echo $- | grep i) ] && [ $SHELL ] && exec $SHELL -l
-
-# vim:filetype=bash
