@@ -1,13 +1,13 @@
 #!/bin/sh
 #
-# ~/.xinitrc
+# xinitrc
 #
 # Executed by startx (run your window manager from here)
 
 [ -f ~/.profile ] && . ~/.profile
 
-if [[ -f ~/.extend.xinitrc ]];then
-	. ~/.extend.xinitrc
+if [[ -f ~/.config/X11/extend.xinitrc ]];then
+	. ~/.config/X11/extend.xinitrc
 fi
 
 userresources=$XDG_CONFIG_HOME/X11/Xresources
