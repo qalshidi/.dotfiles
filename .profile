@@ -41,9 +41,6 @@ export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 #env
 export GPG_TTY=$(tty)
 export PACMAN=powerpill
-export PASSWORD_STORE_ENABLE_EXTENSIONS=1
-export PASSWORD_STORE_GENERATED_LENGTH=16
-export PASSWORD_STORE_CHARACTER_SET="[:alnum:]!@#%*,._+=" 
 export STEAM_RUNTIME=1
 export OMP_NUM_THREADS=8
 export OPENBLAS_NUM_THREADS=8

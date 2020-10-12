@@ -1,4 +1,4 @@
 # Defined in - @ line 1
-function pacremove --wraps='pacaur -Rns --color=auto' --description 'alias pacremove=pacaur -Rns --color=auto'
-  pacaur -Rns --color=auto $argv;
+function pacremove --wraps='pacaur -Rns --color=auto' --wraps='sudo powerpill -Rns' --description 'alias pacremove=sudo powerpill -Rns'
+  sudo powerpill -Rns $argv;
 end

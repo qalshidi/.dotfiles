@@ -1,0 +1,63 @@
+# source secret stuff
+source $XDG_CONFIG_HOME/mutt/muttrc-extend
+
+set my_name = "Qusai Al Shidi"
+set realname = 'Qusai Al Shidi'
+set from = me@qalshidi.science
+set use_from = yes
+
+# Security
+set ssl_starttls = yes
+set ssl_force_tls = yes
+
+# Store message headers locally to speed things up.
+# If hcache is a folder, Mutt will create sub cache folders for each account which may speeds things up even more.
+set header_cache = ~/.cache/mutt
+
+# Store messages locally to speed things up, like searching message bodies.
+# Can be the same folder as header_cache.
+# This will cost important disk usage according to your e-mail amount.
+set message_cachedir = "~/.cache/mutt"
+
+# Maildir
+set mail_check = 120
+set mbox_type=Maildir
+set folder=~/Mail
+# source $XDG_CONFIG_HOME/mutt/mailboxes
+set header_cache=~/.cache/mutt
+set spoolfile=+INBOX
+set record= +INBOX.Sent
+set postponed = +INBOX.Drafts
+
+mailboxes ! "+INBOX" "+INBOX.Archive" "+INBOX.Archive.Charity" "+INBOX.Archive.Important" "+INBOX.Archive.Insurance" "+INBOX.Archive.Mailing Lists" "+INBOX.Archive.Mailing Lists.Haskell Cafe" "+INBOX.Archive.Mailing Lists.SPA" "+INBOX.Archive.Promotions" "+INBOX.Archive.Receipts" "+INBOX.Archive.Statements" "+INBOX.Drafts" "+INBOX.Junk" "+INBOX.Sent" "+INBOX.spam" "+INBOX.Trash"
+set sendmail="/usr/bin/msmtp"
+source $XDG_CONFIG_HOME/mutt/muttrc-bindings
+source $XDG_CONFIG_HOME/mutt/gpg.rc
+source $XDG_CONFIG_HOME/mutt/muttrc-colorscheme
+
+set mime_type_query_command = "xdg-mime query filetype"
+# lbdb is a versatile contact query tool.
+# Invoke via ctrl-t in an address prompt
+# set query_command = "/usr/bin/lbdbq"
+
+###############
+# Message composition settings
+#
+set edit_headers
+
+###############
+# Index settings
+#
+set quit = ask-yes
+set sort = threads
+
+
+# This requires a ~/.mailcap entry with the copiousoutput flag, such as:
+# text/html; lynx -dump -width ${COLUMNS:-80} %s; nametemplate=%s.html; copiousoutput
+# auto_view text/html
+
+###############
+# Pager settings
+#
+ignore *
+unignore From Message-ID Date To Cc Bcc Subject
