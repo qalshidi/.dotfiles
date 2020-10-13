@@ -50,6 +50,7 @@ set edit_headers
 #
 set quit = ask-yes
 set sort = threads
+set delete = yes
 
 
 # This requires a ~/.mailcap entry with the copiousoutput flag, such as:

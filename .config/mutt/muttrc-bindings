@@ -43,9 +43,10 @@ bind index,pager B sidebar-toggle-visible
 # bind index,pager sidebar-last             # move the highlight to the last mailbox
 bind index,pager \Cn sidebar-next             # move the highlight to next mailbox
 bind index,pager \Cm sidebar-next-new         # move the highlight to next mailbox with new mail
-bind index,pager \Cp sidebar-open             # open highlighted mailbox
+bind index,pager \Co sidebar-open             # open highlighted mailbox
 # bind index,pager sidebar-page-down        # scroll the sidebar down 1 page
 # bind index,pager sidebar-page-up          # scroll the sidebar up 1 page
 bind index,pager \Cp sidebar-prev             # move the highlight to previous mailbox
 # bind index,pager sidebar-prev-new         # move the highlight to previous mailbox with new mail
 # bind index,pager sidebar-toggle-virtual   # toggle between mailboxes and virtual mailboxes
+macro index,pager A  "<save-message>+INBOX.Archive<enter>"
