@@ -99,7 +99,7 @@ myKeys =
     --
     ++
     [ ((m .|. myModMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-        | (key, sc) <- zip [xK_q, xK_w, xK_e] [0..]
+        | (key, sc) <- zip [xK_w, xK_e, xK_q] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
     ]
 
