@@ -34,3 +34,5 @@
   whatchanged = less -igFMR --pattern=\"^(commit|diff)\"
 [grep]
   patternType = perl
+[core]
+	autocrlf = input
