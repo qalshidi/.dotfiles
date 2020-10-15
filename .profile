@@ -17,13 +17,6 @@ function program_exists {
     type $1 > /dev/null 2>&1
 }
 
-# PATH
-export MY_NIX_PROFILE=$HOME/.nix-profile/etc/profile.d/nix.sh
-[ -f $MY_NIX_PROFILE ] && . $MY_NIX_PROFILE
-[ -f $HOME/.ghcup/env ] && . $HOME/.ghcup/env
-[ -d /opt/intel/bin ] && export PATH=/opt/intel/bin:$PATH
-export PATH=$HOME/bin:$HOME/.local/bin:$PATH
-
 # Run tmux
 alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf"
 [ $(echo $- | grep i) ] \
@@ -37,6 +30,13 @@ alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf"
         exec tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf attach-session -t "$ATTACH_ID" # if available attach to it
     fi
 [ -n "$TMUX" ] && export SKIM_TMUX=1
+
+# PATH
+export MY_NIX_PROFILE=$HOME/.nix-profile/etc/profile.d/nix.sh
+[ -f $MY_NIX_PROFILE ] && . $MY_NIX_PROFILE
+[ -f $HOME/.ghcup/env ] && . $HOME/.ghcup/env
+[ -d /opt/intel/bin ] && export PATH=/opt/intel/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 
 #env
 export GPG_TTY=$(tty)
