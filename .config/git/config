@@ -1,5 +1,5 @@
 [core]
-  autocrlf=input
+  autocrlf=false
 [http]
   postBuffer = 524288000
 [user]

@@ -14,7 +14,7 @@
 
 # string if exists return no stderr if not
 function program_exists {
-    which $1 > /dev/null 2>&1
+    type $1 > /dev/null 2>&1
 }
 
 # Run tmux
@@ -74,7 +74,6 @@ program_exists lxqt-openssh-askpass && export SUDO_ASKPASS=$(which lxqt-openssh-
 program_exists lxqt-openssh-askpass && export SUDO_ASKPASS=$(which lxqt-openssh-askpass)
 
 # progs
-export TMUX_TMPDIR=$XDG_CACHE_HOME
 export GNUPGHOME=$XDG_DATA_HOME/gnupg
 export WINEPREFIX=$XDG_CONFIG_HOME/wine
 export LESSHISTFILE=$XDG_CACHE_HOME/less/lesshst

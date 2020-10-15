@@ -79,7 +79,7 @@ myKeys =
     , ((myModMask                , xK_F5       ), spawn "firefox")
     , ((myModMask                , xK_F6       ), spawn "$TERMINAL -e nvim ~/Documents/Todo.markdown ")
     , ((myModMask                , xK_F8       ), spawn "env HOME=$XDG_DATA_HOME spotify")
-    , ((myModMask                , xK_F9       ), spawn "env HOME=$XDG_DATA_HOME steam")
+    , ((myModMask                , xK_F9       ), spawn "env steam")
     , ((myModMask                , xK_Print    ), spawn "sleep 0.2; scrot -s ~/Pictures/Screenshots/screenshot.png")
     , ((0                        , xK_Print    ),  spawn "sleep 0.2; scrot ~/Pictures/Screenshots/screenshot.png")
     , ((myModMask                , xK_Escape   ), spawn "lxqt-leave")
