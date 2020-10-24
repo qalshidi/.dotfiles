@@ -22,7 +22,7 @@
   ui = true
 [init]
   templatedir = ~/.config/git_template
-  defaultBranch = main
+	defaultBranch = main
 [alias]
   ctags = !.git/hooks/ctags
 [pager]

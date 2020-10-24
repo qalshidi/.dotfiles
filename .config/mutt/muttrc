@@ -2,9 +2,10 @@
 source $XDG_CONFIG_HOME/mutt/muttrc-extend
 
 set my_name = "Qusai Al Shidi"
-set realname = 'Qusai Al Shidi'
+set realname = "Qusai Al Shidi"
 set from = me@qalshidi.science
 set use_from = yes
+set signature=$XDG_DATA_HOME/signature
 
 # Security
 set ssl_starttls = yes
@@ -70,3 +71,7 @@ set sidebar_indent_string = "    "
 #
 ignore *
 unignore From Message-ID Date To Cc Bcc Subject
+
+set new_mail_command="notify-send 'New Email' '%n new messages, %u unread.' &"
+
+# vim: syntax=neomuttrc

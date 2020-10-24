@@ -1,16 +1,23 @@
 import XMonad
+
+import XMonad.Actions.UpdatePointer
+
 import XMonad.Config.Desktop
+
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
+
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing
-import qualified XMonad.StackSet as W
 import XMonad.Layout.ThreeColumns
+
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.SpawnOnce
+
+import qualified XMonad.StackSet as W
 
 import Data.Monoid
 
@@ -47,9 +54,9 @@ myStartupHook :: X ()
 myStartupHook = do
     spawnOnce "lxqt-session &"
     spawnOnce "lxqt-policykit-agent &"
-    spawnOnce "trayer --width 15 --align right --edge top --expand true --height 23 --monitor primary &"
     spawnOnce "udiskie --tray &>> /tmp/udiskie.log &"
     spawnOnce "nitrogen --restore &"
+    spawnOnce "lxqt-panel &"
 
 myManageHook :: Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
@@ -104,35 +111,34 @@ myKeys =
     ]
 
 myWorkspaces =
-    [ "1"
-    , "2"
-    , "3"
+    [ "1:terminal"
+    , "2:terminal"
+    , "3:chat"
     , "4:email"
     , "5:browser"
-    , "6:work"
-    , "7"
+    , "6:other"
+    , "7:other"
     , "8:music"
     , "9:steam"
-    , "0"
     ]
 
-myPP :: PP
-myPP = def
-    { ppCurrent = currentLeftWrap . xmobarColor solOrange solBase03 . pad
-    , ppVisible = xmobarColor solBase02 solYellow . visibleLeftWrap . pad
-    , ppVisibleNoWindows = Just (\wsId -> xmobarColor solBase1 "" wsId)
-    , ppTitle   = xmobarColor solBase01  "" . shorten 40
-    , ppWsSep = ", "
-    , ppSep = " | "
-    , ppUrgent  = xmobarColor solRed solOrange
-    }
-    where
-      currentLeftWrap = wrap
-                          (xmobarColor solBase02 "" "\57556")
-                          (xmobarColor solBase02 "" "\57554")
-      visibleLeftWrap = wrap
-                          (xmobarColor solYellow "" "\57556")
-                          (xmobarColor solYellow "" "\57554")
+-- myPP :: PP
+-- myPP = def
+--     { ppCurrent = currentLeftWrap . xmobarColor solOrange solBase03 . pad
+--     , ppVisible = xmobarColor solBase02 solYellow . visibleLeftWrap . pad
+--     , ppVisibleNoWindows = Just (\wsId -> xmobarColor solBase1 "" wsId)
+--     , ppTitle   = xmobarColor solBase01  "" . shorten 40
+--     , ppWsSep = ", "
+--     , ppSep = " | "
+--     , ppUrgent  = xmobarColor solRed solOrange
+--     }
+--     where
+--       currentLeftWrap = wrap
+--                           (xmobarColor solBase02 "" "\57556")
+--                           (xmobarColor solBase02 "" "\57554")
+--       visibleLeftWrap = wrap
+--                           (xmobarColor solYellow "" "\57556")
+--                           (xmobarColor solYellow "" "\57554")
 
 -- Layout
 -- ======
@@ -164,13 +170,16 @@ main = do
     xmonad $ desktopConfig
         { manageHook         = myManageHook <+> manageHook desktopConfig
         , handleEventHook    = fullscreenEventHook <+> handleEventHook desktopConfig
-        , layoutHook         = desktopLayoutModifiers myLayoutHook
+        , layoutHook         = desktopLayoutModifiers $ myLayoutHook
         , modMask            = myModMask
         , startupHook        = myStartupHook <+> startupHook desktopConfig
         , terminal           = myTerminal
         , normalBorderColor  = solCyan
         , focusedBorderColor = solOrange
-        , logHook            = dynamicLogWithPP $ myPP { ppOutput = hPutStrLn xmproc }
+        , logHook            = do
+                                   -- dynamicLogWithPP $ myPP { ppOutput = hPutStrLn xmproc }
+                                   updatePointer (0.5, 0.5) (0, 0)
+                                   logHook desktopConfig
         , workspaces         = myWorkspaces
         , borderWidth        = 3
         } `additionalKeys` myKeys

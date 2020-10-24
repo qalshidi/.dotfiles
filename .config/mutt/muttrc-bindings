@@ -50,3 +50,4 @@ bind index,pager \Cp sidebar-prev             # move the highlight to previous m
 # bind index,pager sidebar-prev-new         # move the highlight to previous mailbox with new mail
 # bind index,pager sidebar-toggle-virtual   # toggle between mailboxes and virtual mailboxes
 macro index,pager A  "<save-message>+INBOX.Archive<enter>"
+macro pager \cb <pipe-entry>'urlskim'<enter> 'Follow links with urlview'
