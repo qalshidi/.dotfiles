@@ -24,18 +24,22 @@ function program_exists {
     type $1 > /dev/null 2>&1
 }
 
+# Check if shell is in interactive mode
+[ $(echo $- | grep i) ] && export IS_INTERACTIVE=yes
+
 # Run tmux
 alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf"
-[ $(echo $- | grep i) ] \
-    && program_exists tmux \
-    && [ -z "$TMUX" ] \
-    && unset SHELL \
-    && export ATTACH_ID="$(tmux ls | grep -vm1 attached | cut -d: -f1 )" \
-    && if [ -z "$ATTACH_ID" ]; then # if not available create a new one
-        exec tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf new-session 
-    else
-        exec tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf attach-session -t "$ATTACH_ID" # if available attach to it
+if [ "$IS_INTERACTIVE" ]; then
+    if program_exists tmux && [ -z "$TMUX" ]; then
+        unset SHELL
+        export ATTACH_ID="$(tmux ls | grep -vm1 attached | cut -d: -f1 )"
+        if [ -z "$ATTACH_ID" ]; then # if not available create a new one
+            exec tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf new-session 
+        else
+            exec tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf attach-session -t "$ATTACH_ID" # if available attach to it
+        fi
     fi
+fi
 [ -n "$TMUX" ] && export SKIM_TMUX=1
 
 #env
@@ -63,7 +67,7 @@ program_exists bat && export SKIM_CTRL_T_OPTS="--preview 'bat --style=numbers --
 # default programs
 export VISUAL=vim
 export EDITOR=vim
-program_exists nvim && export EDITOR=$(which nvim) && export VISUAL=$(which nvim) && alias vim="$(which nvim)" && export MANPAGER="nvim -R +Man! +Goyo +'autocmd User GoyoLeave nested q'"
+program_exists nvim && export EDITOR=$(which nvim) && export VISUAL=$(which nvim) && alias vim="$(which nvim)" && export MANPAGER="nvim -R +Man!"
 program_exists alacritty && export TERMINAL=$(which alacritty)
 program_exists fish && export SHELL=$(which fish)
 # askpass
@@ -72,6 +76,14 @@ program_exists x11-ssh-askpass && export SUDO_ASKPASS=$(which x11-ssh-askpass)
 program_exists openssh-askpass && export SUDO_ASKPASS=$(which openssh-askpass)
 program_exists lxqt-openssh-askpass && export SUDO_ASKPASS=$(which lxqt-openssh-askpass)
 program_exists lxqt-openssh-askpass && export SUDO_ASKPASS=$(which lxqt-openssh-askpass)
+
+# SSH agent
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    ssh-agent > "$XDG_RUNTIME_DIR/ssh-agent.env"
+fi
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+fi
 
 # progs
 export GNUPGHOME=$XDG_DATA_HOME/gnupg
@@ -108,4 +120,6 @@ extend=$HOME/.profile.extend.sh
 [ -f $extend ] && . $extend
 
 # Run custom shell
-[ $(echo $- | grep i) ] && [ $SHELL ] && exec $SHELL -l
+if [ "$IS_INTERACTIVE" ] && [ "$SHELL" ]; then
+    exec $SHELL -l
+fi
