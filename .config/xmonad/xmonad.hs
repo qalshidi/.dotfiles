@@ -56,7 +56,6 @@ myStartupHook = do
     spawnOnce "lxqt-policykit-agent &"
     spawnOnce "udiskie --tray &>> /tmp/udiskie.log &"
     spawnOnce "nitrogen --restore &"
-    spawnOnce "lxqt-panel &"
 
 myManageHook :: Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
@@ -84,7 +83,7 @@ myKeys =
     , ((myModMask                , xK_v        ), spawn "pavucontrol")
     , ((myModMask                , xK_F4       ), spawn "thunderbird")
     , ((myModMask                , xK_F5       ), spawn "firefox")
-    , ((myModMask                , xK_F6       ), spawn "$TERMINAL -e nvim ~/Documents/Todo.markdown ")
+    , ((myModMask                , xK_F6       ), spawn "$TERMINAL -e nvim ~/Documents/Todo/*todo.txt")
     , ((myModMask                , xK_F8       ), spawn "env HOME=$XDG_DATA_HOME spotify")
     , ((myModMask                , xK_F9       ), spawn "env steam")
     , ((myModMask                , xK_Print    ), spawn "sleep 0.2; scrot -s ~/Pictures/Screenshots/screenshot.png")
