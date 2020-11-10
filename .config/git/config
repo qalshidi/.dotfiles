@@ -1,38 +1,39 @@
 [core]
-  autocrlf=false
 [http]
-  postBuffer = 524288000
+	postBuffer = 524288000
 [user]
-  name = Qusai Al Shidi
-  email = me@qalshidi.science
-  signingkey = A3F5E7A4ADD746EC
+	name = Qusai Al Shidi
+	email = me@qalshidi.science
+	signingkey = A3F5E7A4ADD746EC
 [merge]
-  tool = vimdiff
+	tool = vimdiff
 [mergetool]
-  prompt = false
+	prompt = false
 [mergetool "vimdiff"]
-  cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+	cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [git]
-  pull = rebase
+	pull = rebase
 [commit]
-  gpgsign = true
+	gpgsign = true
 [pull]
-  rebase = true
+	rebase = true
 [color]
-  ui = true
+	ui = true
 [init]
-  templatedir = ~/.config/git_template
+	templatedir = ~/.config/git_template
 	defaultBranch = main
 [alias]
-  ctags = !.git/hooks/ctags
+	ctags = !.git/hooks/ctags
 [pager]
-  diff = bat --plain -l gitlog --pager=\"less -igFMR --pattern=^(commit|diff)\"
-  log = bat --plain -l gitlog --pager=\"less -igFMR --pattern=^(commit|diff)\"
-  show = bat --plain -l gitlog --pager=\"less -igFMR --pattern=^(commit|diff)\"
-  show-branch = true
-  status = true
-  whatchanged = less -igFMR --pattern=\"^(commit|diff)\"
+	diff = bat --plain -l gitlog --pager=\"less -igFMR --pattern=^(commit|diff)\"
+	log = bat --plain -l gitlog --pager=\"less -igFMR --pattern=^(commit|diff)\"
+	show = bat --plain -l gitlog --pager=\"less -igFMR --pattern=^(commit|diff)\"
+	show-branch = true
+	status = true
+	whatchanged = less -igFMR --pattern=\"^(commit|diff)\"
 [grep]
-  patternType = perl
+	patternType = perl
 [core]
 	autocrlf = input
+
+# vim: noexpandtab
