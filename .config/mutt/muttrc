@@ -45,7 +45,7 @@ set mime_type_query_command = "xdg-mime query filetype"
 # Message composition settings
 #
 set edit_headers
-set wrap=80
+set wrap = 80
 
 ###############
 # Index settings
@@ -55,7 +55,7 @@ set sort = threads
 set delete = yes
 set sidebar_visible
 set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
-set sidebar_width = 35
+set sidebar_width = 20
 set sidebar_short_path
 set sidebar_component_depth = 1
 set sidebar_folder_indent
