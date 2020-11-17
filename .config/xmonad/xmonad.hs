@@ -26,7 +26,8 @@ import System.IO
 
 myTerminal = "$TERMINAL"
 myModMask = mod4Mask -- Win key or Super_L
-myLauncher = "rofi -show-icons -theme solarized_alternate -font 'sans-serif 16'"
+rofiPrefix = "rofi -theme solarized_alternate -font 'sans-serif 16' "
+myLauncher = rofiPrefix ++ "-show-icons"
 myProgramLauncher = unwords [myLauncher, "-modi combi -show combi -combi-modi drun,run -terminal $TERMINAL"]
 mySSHLauncher = unwords [myLauncher, "-show ssh -terminal $TERMINAL"]
 outerGaps = 30
@@ -73,6 +74,7 @@ myManageHook = composeAll
 myKeys = 
     [ ((myModMask                , xK_p        ), spawn myProgramLauncher)
     , ((myModMask .|. shiftMask  , xK_p        ), spawn "rofipass")
+    , ((myModMask .|. shiftMask  , xK_m        ), spawn $ rofiPrefix ++ "-show emoji -modi emoji")
     , ((myModMask                , xK_s        ), spawn mySSHLauncher)
     , ((myModMask                , xK_backslash), spawn myTerminal)
     , ((myModMask                , xK_Tab      ), sendMessage NextLayout)
