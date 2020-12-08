@@ -53,9 +53,6 @@ solGreen = "#859900"
 
 myStartupHook :: X ()
 myStartupHook = do
-    spawnOnce "lxqt-session &"
-    spawnOnce "lxqt-policykit-agent &"
-    spawnOnce "udiskie --tray &>> /tmp/udiskie.log &"
     spawnOnce "nitrogen --restore &"
 
 myManageHook :: Query (Data.Monoid.Endo WindowSet)
@@ -167,7 +164,6 @@ myLayoutHook
 -- ====
 main :: IO()
 main = do
-    xmproc <- spawnPipe "xmobar"
     xmonad $ desktopConfig
         { manageHook         = myManageHook <+> manageHook desktopConfig
         , handleEventHook    = fullscreenEventHook <+> handleEventHook desktopConfig
