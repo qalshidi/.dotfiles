@@ -27,6 +27,7 @@ bind pager,index                dd  delete-message
 
 # Mail & Reply
 bind index                      \Cm list-reply # Doesn't work currently
+macro attach S <save-entry><kill-line>~/Downloads/
 
 # Threads
 bind browser,pager,index        N   search-opposite
