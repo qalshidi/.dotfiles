@@ -30,8 +30,6 @@ rofiPrefix = "rofi -theme solarized_alternate -font 'sans-serif 16' "
 myLauncher = rofiPrefix ++ "-show-icons"
 myProgramLauncher = unwords [myLauncher, "-modi combi -show combi -combi-modi drun,run -terminal $TERMINAL"]
 mySSHLauncher = unwords [myLauncher, "-show ssh -terminal $TERMINAL"]
-outerGaps = 30
-innerGaps = 10
 
 -- solarized color scheme
 solBase03 = "#002b36"
@@ -152,13 +150,7 @@ myLayout =  threecol ||| tiled ||| (Mirror tiled) ||| noBorders Full
     delta   = 3/100
     threecol = ThreeColMid nmaster delta ratio
 
-myLayoutHook
-    = smartBorders
-    . spacingRaw
-        True
-        (Border outerGaps outerGaps outerGaps outerGaps) True
-        (Border innerGaps innerGaps innerGaps innerGaps) True
-    $   myLayout
+myLayoutHook = smartBorders myLayout
 
 -- Main
 -- ====
