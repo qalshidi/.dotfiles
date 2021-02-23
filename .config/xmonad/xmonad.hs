@@ -62,6 +62,7 @@ myManageHook = composeAll
     , className =? "firefox"              --> doShift "5:browser"
     , className =? "spotify"              --> doShift "8:music"
     , className =? "Steam"                --> doShift "9:steam"
+    , className =? "Discord"              --> doShift "9:steam"
     , isFullscreen                        --> doFullFloat
     , manageDocks
     ]

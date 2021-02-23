@@ -24,24 +24,6 @@ function program_exists {
     type $1 > /dev/null 2>&1
 }
 
-# Check if shell is in interactive mode
-[ $(echo $- | grep i) ] && export IS_INTERACTIVE=yes
-
-# Run tmux
-alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf"
-if [ "$IS_INTERACTIVE" ]; then
-    if program_exists tmux && [ -z "$TMUX" ]; then
-        unset SHELL
-        export ATTACH_ID="$(tmux ls | grep -vm1 attached | cut -d: -f1 )"
-        if [ -z "$ATTACH_ID" ]; then # if not available create a new one
-            exec tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf new-session 
-        else
-            exec tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf attach-session -t "$ATTACH_ID" # if available attach to it
-        fi
-    fi
-fi
-[ -n "$TMUX" ] && export SKIM_TMUX=1
-
 #env
 export GPG_TTY=$(tty)
 export PACMAN=powerpill
@@ -104,21 +86,27 @@ export IDL_PATH=+$XDG_DATA_HOME/idl:'<IDL_DEFAULT>'
 export IDL_DLM_PATH=+$XDG_DATA_HOME/idl:'<IDL_DEFAULT>'
 export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/ripgreprc
 
-# welcome message
-if program_exists neofetch; then
-    if program_exists fortune; then
-        welcome="$(fortune)"
-        if program_exists cowsay; then
-            welcome=$(cowsay -f tux -W30 "$welcome")
-        fi
-    fi
-    neofetch --memory_display infobar --disable term_font de resolution --ascii "$welcome"
-fi
-[ -f /tmp/weather ] && cat /tmp/weather
-
 # Per computer options
 extend=$HOME/.profile.extend.sh
 [ -f $extend ] && . $extend
+
+# Check if shell is in interactive mode
+[ $(echo $- | grep i) ] && export IS_INTERACTIVE=yes
+
+# Run tmux
+alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf"
+if [ "$IS_INTERACTIVE" ]; then
+    if program_exists tmux && [ -z "$TMUX" ]; then
+        unset SHELL
+        export ATTACH_ID="$(tmux ls | grep -vm1 attached | cut -d: -f1 )"
+        if [ -z "$ATTACH_ID" ]; then # if not available create a new one
+            exec tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf new-session 
+        else
+            exec tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf attach-session -t "$ATTACH_ID" # if available attach to it
+        fi
+    fi
+fi
+[ -n "$TMUX" ] && export SKIM_TMUX=1
 
 # Run custom shell
 if [ "$IS_INTERACTIVE" ] && [ "$SHELL" ]; then
