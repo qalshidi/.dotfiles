@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -exo pipefail
+
+cvlc --play-and-exit /usr/share/sounds/freedesktop/stereo/bell.oga

@@ -25,17 +25,20 @@ function program_exists {
 }
 
 #env
+export DEFAULTNPROC=$(($(nproc)-1))    # One less than num proc
+export MAKEFLAGS=-j$DEFAULTNPROC
 export GPG_TTY=$(tty)
 export PACMAN=powerpill
 export STEAM_RUNTIME=1
 export OMP_NUM_THREADS=8
 export OPENBLAS_NUM_THREADS=8
-export XZ_OPT='-9T0'
+export XZ_OPT=-9T$DEFAULTNPROC
+export ZSTD_CLEVEL=19
+export ZSTD_NBTHREADS=$DEFAULTNPROC
 export TMPDIR=/tmp
 export QT_PLATFORM_PLUGIN=lxqt
 export QT_QPA_PLATFORMTHEME=lxqt
 export XDG_CURRENT_DESKTOP="LXQt"
-export MAKEFLAGS=-j$(($(nproc)-1))
 export BAT_THEME="Solarized (dark)"
 export LESS="-iFRX"
 program_exists vivid && export LS_COLORS="$(vivid generate solarized-dark)"
