@@ -64,11 +64,13 @@ program_exists lxqt-openssh-askpass && export SUDO_ASKPASS=$(which lxqt-openssh-
 program_exists lxqt-openssh-askpass && export SUDO_ASKPASS=$(which lxqt-openssh-askpass)
 
 # SSH agent
-if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-    ssh-agent > "$XDG_RUNTIME_DIR/ssh-agent.env"
-fi
-if [ -z "$SSH_AUTH_SOCK" ]; then
-    source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+if test -n "$XDG_RUNTIME_DIR"; then
+    if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+        ssh-agent > "$XDG_RUNTIME_DIR/ssh-agent.env"
+    fi
+    if [ -z "$SSH_AUTH_SOCK" ]; then
+        source "$XDG_RUNTIME_DIR/ssh-agent.env" > /dev/null
+    fi
 fi
 
 # progs
