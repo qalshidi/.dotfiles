@@ -16,6 +16,7 @@
 export MY_NIX_PROFILE=$HOME/.nix-profile/etc/profile.d/nix.sh
 [ -f $MY_NIX_PROFILE ] && . $MY_NIX_PROFILE
 [ -f $HOME/.ghcup/env ] && . $HOME/.ghcup/env
+[ -f $HOME/.linuxbrew/bin/brew ] && eval "$($HOME/.linuxbrew/bin/brew shellenv)"
 [ -d /opt/intel/bin ] && export PATH=/opt/intel/bin:$PATH
 export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 
