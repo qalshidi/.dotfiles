@@ -52,3 +52,5 @@
 	colorMoved = default
 
 # vim: noexpandtab
+[credential]
+	helper = store

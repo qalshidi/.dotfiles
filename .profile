@@ -99,7 +99,6 @@ extend=$HOME/.profile.extend.sh
 [ $(echo $- | grep i) ] && export IS_INTERACTIVE=yes
 
 # Run tmux
-alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf"
 if [ "$IS_INTERACTIVE" ]; then
     if program_exists tmux && [ -z "$TMUX" ]; then
         unset SHELL
