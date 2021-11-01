@@ -114,6 +114,6 @@ fi
 [ -n "$TMUX" ] && export SKIM_TMUX=1
 
 # Run custom shell
-if [ "$IS_INTERACTIVE" ] && [ "$SHELL" ]; then
+if [ "$IS_INTERACTIVE" ] && [ "$SHELL" ] && [ "$0" != "sh" ] && [ "$0" != "bash" ]; then
     exec $SHELL -l
 fi
