@@ -415,6 +415,7 @@ key_bindings:
   - { key: Key0,     mods: Control,       action: ResetFontSize    }
   - { key: Equals,   mods: Control,       action: IncreaseFontSize }
   - { key: Minus,    mods: Control,       action: DecreaseFontSize }
+  - { key: Tab,      mods: Control,        chars: "\x1b[9;5u" }
 
   #- { key: Paste,                    action: Paste                            }
   #- { key: Copy,                     action: Copy                             }

@@ -54,7 +54,7 @@ program_exists bat && export SKIM_CTRL_T_OPTS="--preview 'bat --style=numbers --
 # default programs
 export VISUAL=vim
 export EDITOR=vim
-program_exists nvim && export EDITOR=$(which nvim) && export VISUAL=$(which nvim) && alias vim="$(which nvim)" && export MANPAGER="nvim -R +Man!"
+program_exists nvim && export EDITOR=$(which nvim) && export VISUAL=$(which nvim) && alias vim="$(which nvim)" && export MANPAGER="nvim +Man!"
 program_exists alacritty && export TERMINAL=$(which alacritty)
 program_exists fish && export SHELL=$(which fish)
 # askpass
