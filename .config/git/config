@@ -1,6 +1,6 @@
 [core]
 	autocrlf = input
-	pager = delta
+	pager = bat
 
 [http]
 	postBuffer = 524288000
