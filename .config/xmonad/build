@@ -1,0 +1,2 @@
+#build command
+stack exec --package xmonad --package xmonad-contrib -- ghc -O -package xmonad -package xmonad-contrib --make xmonad.hs -i -ilib -main-is main -fforce-recomp -o /home/qusai/bin/xmonad
