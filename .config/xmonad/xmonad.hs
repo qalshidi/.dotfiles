@@ -157,9 +157,9 @@ myLayoutHook = smartBorders myLayout
 -- ====
 main :: IO()
 main = do
-    xmonad $ desktopConfig
+    xmonad $ ewmhFullscreen . ewmh $ desktopConfig
         { manageHook         = myManageHook <+> manageHook desktopConfig
-        , handleEventHook    = fullscreenEventHook <+> handleEventHook desktopConfig
+        , handleEventHook    = handleEventHook desktopConfig
         , layoutHook         = desktopLayoutModifiers $ myLayoutHook
         , modMask            = myModMask
         , startupHook        = myStartupHook <+> startupHook desktopConfig
