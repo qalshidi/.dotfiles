@@ -139,7 +139,7 @@ myWorkspaces =
 
 -- Layout
 -- ======
-myLayout =  threecol ||| tiled ||| (Mirror tiled) ||| noBorders Full
+myLayout =  threecol ||| tiled ||| Mirror tiled ||| noBorders Full
   where
     -- default tiling algorithm partitions the screen into two panes
     tiled   = Tall nmaster delta ratio
@@ -158,11 +158,11 @@ myLayoutHook = smartBorders myLayout
 main :: IO()
 main = do
     xmonad $ ewmhFullscreen . ewmh $ desktopConfig
-        { manageHook         = myManageHook <+> manageHook desktopConfig
+        { manageHook         = myManageHook <> manageHook desktopConfig
         , handleEventHook    = handleEventHook desktopConfig
-        , layoutHook         = desktopLayoutModifiers $ myLayoutHook
+        , layoutHook         = desktopLayoutModifiers myLayoutHook
         , modMask            = myModMask
-        , startupHook        = myStartupHook <+> startupHook desktopConfig
+        , startupHook        = myStartupHook <> startupHook desktopConfig
         , terminal           = myTerminal
         , normalBorderColor  = solCyan
         , focusedBorderColor = solOrange
