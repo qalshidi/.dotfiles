@@ -1,4 +1,7 @@
 #build command
-exec stack exec --package xmonad --package xmonad-contrib -- ghc \
-  -O -package xmonad -package xmonad-contrib --make xmonad.hs \
-  -i -ilib -main-is main -fforce-recomp -o "$1"
+cabal build
+cabal install \
+  --install-method=copy --overwrite-policy=always \
+  --installdir=$XDG_CONFIG_HOME/xmonad
+echo Copying $XDG_CONFIG_HOME/xmonad/my-xmonad to "$1"
+rsync $XDG_CONFIG_HOME/xmonad/my-xmonad "$1"
