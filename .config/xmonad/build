@@ -1,5 +1,7 @@
+#!/usr/bin/env bash
+
 #build command
-cabal build
+cabal new-build --upgrade-dependencies --force-reinstalls
 cabal install \
   --install-method=copy --overwrite-policy=always \
   --installdir=$XDG_CONFIG_HOME/xmonad
