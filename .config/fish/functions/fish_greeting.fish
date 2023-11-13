@@ -14,6 +14,6 @@ function fish_greeting
   end
 
   if test -f /tmp/weather
-    cat /tmp/weather
+    /usr/bin/cat /tmp/weather
   end
 end
