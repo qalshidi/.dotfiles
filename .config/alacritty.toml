@@ -85,3 +85,6 @@ mods = "Control"
 [shell]
 args = ["--login"]
 program = "/bin/bash"
+
+[window]
+opacity = 0.8
