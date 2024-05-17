@@ -29,7 +29,6 @@ function program_exists {
 export DEFAULTNPROC=$(($(nproc)-1))    # One less than num proc
 export MAKEFLAGS=-j$DEFAULTNPROC
 export GPG_TTY=$(tty)
-export PACMAN=powerpill
 export STEAM_RUNTIME=1
 export OMP_NUM_THREADS=8
 export OPENBLAS_NUM_THREADS=8
