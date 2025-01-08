@@ -6,6 +6,7 @@ import XMonad.Config.Desktop
 
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.DynamicProperty
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 
@@ -53,11 +54,29 @@ myStartupHook :: X ()
 myStartupHook = do
     spawnOnce "nitrogen --restore &"
 
+manageZoomHook =
+  composeAll $
+    [ (className =? zoomClassName) <&&> shouldFloat <$> title --> doFloat,
+      (className =? zoomClassName) <&&> shouldSink <$> title --> doSink
+    ]
+  where
+    zoomClassName = "zoom"
+    tileTitles =
+      [ "Zoom - Free Account", -- main window
+        "Zoom - Licensed Account", -- main window
+        "Zoom", -- meeting window on creation
+        "Zoom Meeting" -- meeting window shortly after creation
+      ]
+    shouldFloat title = title `notElem` tileTitles
+    shouldSink title = title `elem` tileTitles
+    doSink = (ask >>= doF . W.sink) <+> doF W.swapDown
+
 myManageHook :: Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
     [ className =? "lxqt-openssh-askpass" --> doFloat
     , className =? "Xmessage"             --> doFloat
     , className =? "mpv"                  --> doFloat
+    , className =? "Zoom"                 --> doFloat
     , className =? "thunderbird"          --> doShift "4:email"
     , className =? "firefox"              --> doShift "5:browser"
     , className =? "spotify"              --> doShift "8:music"
@@ -65,6 +84,7 @@ myManageHook = composeAll
     , className =? "Discord"              --> doShift "9:steam"
     , isFullscreen                        --> doFullFloat
     , manageDocks
+    , manageZoomHook
     ]
 
 myKeys = 
@@ -153,13 +173,19 @@ myLayout =  threecol ||| tiled ||| Mirror tiled ||| noBorders Full
 
 myLayoutHook = smartBorders myLayout
 
+myHandleEventHook = 
+    mconcat 
+    [ dynamicTitle manageZoomHook,
+      handleEventHook desktopConfig 
+    ]
+
 -- Main
 -- ====
 main :: IO()
 main = do
-    xmonad $ ewmhFullscreen . ewmh $ desktopConfig
+    xmonad $ docks $ ewmhFullscreen . ewmh $ desktopConfig
         { manageHook         = myManageHook <> manageHook desktopConfig
-        , handleEventHook    = handleEventHook desktopConfig
+        , handleEventHook    = myHandleEventHook
         , layoutHook         = desktopLayoutModifiers myLayoutHook
         , modMask            = myModMask
         , startupHook        = myStartupHook <> startupHook desktopConfig
