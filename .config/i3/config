@@ -45,10 +45,6 @@ set $border border pixel 3
 for_window [class=".*"] $border 
 set $border_focus border pixel 8
 
-# Auto start necessities allow $XDG_CONFIG_HOME/autostart/*.desktop
-# files to dictate autostart
-exec --no-startup-id lxqt-session && lxqt-powermanagement && lxqt-policykit-agent
-
 # Application specific
 for_window [class="lxqt-openssh-askpass"] floating enable
 
@@ -68,7 +64,7 @@ set $mod Mod4
 # use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+BackSpace kill
 # change focus
 bindsym $mod+$left $border; focus left; $border_focus
 bindsym $mod+$down $border; focus down; $border_focus
@@ -102,7 +98,7 @@ bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+t floating toggle
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 # focus the parent container
@@ -116,14 +112,15 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
 ## Applications
-set $TERMINAL i3-sensible-terminal
+set $TERMINAL alacritty
 # Terminal and File Manager
-bindsym $mod+Return exec --no-startup-id "$TERMINAL -e ranger"
+bindsym $mod+Return exec --no-startup-id "$TERMINAL"
 bindsym $mod+Shift+Return exec --no-startup-id "$TERMINAL"
 # Launcher
 set $launcher rofi -show-icons -theme solarized_alternate -font 'sans-serif 16'
 bindsym $mod+d exec "$launcher -modi combi -show combi -combi-modi drun,run -terminal $TERMINAL"
-bindsym $mod+Shift+d exec $launcher -show ssh -terminal "$TERMINAL"
+bindsym $mod+Shift+s exec $launcher -show ssh -terminal "$TERMINAL"
+bindsym $mod+Shift+p exec rofipass
 # Volume
 bindsym $mod+Shift+v exec pavucontrol
 # Screenshot
@@ -138,7 +135,7 @@ set $ws4 "4"
 
 set $ws5 "5: browser"
 assign [class="(?i)firefox"] $ws5
-bindsym $mod+F5 exec "env HOME=$XDG_DATA_HOME firefox"
+bindsym $mod+F5 exec "firefox"
 
 set $ws6 "6: work"
 bindsym $mod+F6 exec $terminal -e nvim ~/Documents/Todo.markdown 
@@ -220,154 +217,3 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 bindsym $mod+r mode "resize"
-
-# gaps
-smart_gaps on
-gaps inner 10
-gaps outer 30
-set $gaps_default gaps inner all set 10; gaps outer all set 30;
-
-set $mode_gaps Gaps: (o)uter, (i)nner, (h)orizontal, (v)ertical, (t)op, (r)ight, (b)ottom, (l)eft, (d)efault
-set $mode_gaps_outer Outer Gaps: +k|-j|0 (local), Shift + +k|-j|0 (global)
-set $mode_gaps_inner Inner Gaps: +k|-j|0 (local), Shift + +k|-j|0 (global)
-set $mode_gaps_horiz Horizontal Gaps: +k|-j|0 (local), Shift + +k|-j|0 (global)
-set $mode_gaps_verti Vertical Gaps: +k|-j|0 (local), Shift + +k|-j|0 (global)
-set $mode_gaps_top Top Gaps: +k|-j|0 (local), Shift + +k|-j|0 (global)
-set $mode_gaps_right Right Gaps: +k|-j|0 (local), Shift + +k|-j|0 (global)
-set $mode_gaps_bottom Bottom Gaps: +k|-j|0 (local), Shift + +k|-j|0 (global)
-set $mode_gaps_left Left Gaps: +k|-j|0 (local), Shift + +k|-j|0 (global)
-bindsym $mod+Shift+g mode "$mode_gaps"
-
-mode "$mode_gaps" {
-        bindsym o      mode "$mode_gaps_outer"
-        bindsym i      mode "$mode_gaps_inner"
-        bindsym h      mode "$mode_gaps_horiz"
-        bindsym v      mode "$mode_gaps_verti"
-        bindsym t      mode "$mode_gaps_top"
-        bindsym r      mode "$mode_gaps_right"
-        bindsym b      mode "$mode_gaps_bottom"
-        bindsym l      mode "$mode_gaps_left"
-        bindsym d $gaps_default
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
-}
-
-mode "$mode_gaps_outer" {
-        bindsym k  gaps outer current plus 5
-        bindsym j gaps outer current minus 5
-        bindsym 0     gaps outer current set 0
-
-        bindsym Shift+k  gaps outer all plus 5
-        bindsym Shift+j gaps outer all minus 5
-        bindsym Shift+0     gaps outer all set 0
-
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
-}
-mode "$mode_gaps_inner" {
-        bindsym k  gaps inner current plus 5
-        bindsym j gaps inner current minus 5
-        bindsym 0     gaps inner current set 0
-
-        bindsym Shift+k  gaps inner all plus 5
-        bindsym Shift+j gaps inner all minus 5
-        bindsym Shift+0     gaps inner all set 0
-
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
-}
-mode "$mode_gaps_horiz" {
-        bindsym k  gaps horizontal current plus 5
-        bindsym j gaps horizontal current minus 5
-        bindsym 0     gaps horizontal current set 0
-
-        bindsym Shift+k  gaps horizontal all plus 5
-        bindsym Shift+j gaps horizontal all minus 5
-        bindsym Shift+0     gaps horizontal all set 0
-
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
-}
-mode "$mode_gaps_verti" {
-        bindsym k  gaps vertical current plus 5
-        bindsym j gaps vertical current minus 5
-        bindsym 0     gaps vertical current set 0
-
-        bindsym Shift+k  gaps vertical all plus 5
-        bindsym Shift+j gaps vertical all minus 5
-        bindsym Shift+0     gaps vertical all set 0
-
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
-}
-mode "$mode_gaps_top" {
-        bindsym k  gaps top current plus 5
-        bindsym j gaps top current minus 5
-        bindsym 0     gaps top current set 0
-
-        bindsym Shift+k  gaps top all plus 5
-        bindsym Shift+j gaps top all minus 5
-        bindsym Shift+0     gaps top all set 0
-
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
-}
-mode "$mode_gaps_right" {
-        bindsym k  gaps right current plus 5
-        bindsym j gaps right current minus 5
-        bindsym 0     gaps right current set 0
-
-        bindsym Shift+k  gaps right all plus 5
-        bindsym Shift+j gaps right all minus 5
-        bindsym Shift+0     gaps right all set 0
-
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
-}
-mode "$mode_gaps_bottom" {
-        bindsym k  gaps bottom current plus 5
-        bindsym j gaps bottom current minus 5
-        bindsym 0     gaps bottom current set 0
-
-        bindsym Shift+k  gaps bottom all plus 5
-        bindsym Shift+j gaps bottom all minus 5
-        bindsym Shift+0     gaps bottom all set 0
-
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
-}
-mode "$mode_gaps_left" {
-        bindsym k  gaps left current plus 5
-        bindsym j gaps left current minus 5
-        bindsym 0     gaps left current set 0
-
-        bindsym Shift+k  gaps left all plus 5
-        bindsym Shift+j gaps left all minus 5
-        bindsym Shift+0     gaps left all set 0
-
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
-}
-
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-bar {
-    status_command i3status
-	position top
-	strip_workspace_numbers no
-	strip_workspace_name no
-	workspace_buttons yes
-	separator_symbol "/"
-
-	colors {
-		background $base2
-		statusline $base00
-		separator $base01
-
-		focused_workspace  $base01 $base3 $cyan
-		active_workspace   $base01 $base3 $violet
-		inactive_workspace $base3 $base2 $base00
-		urgent_workspace   $base01 $base3 $orange
-		binding_mode       $base01 $base3 $cyan
-	}
-}
